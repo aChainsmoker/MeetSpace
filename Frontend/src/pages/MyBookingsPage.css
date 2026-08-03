@@ -1,0 +1,26 @@
+.bookings-page {
+  width: 100%;
+}
+
+.bookings-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bookings-page__fab {
+  position: fixed;
+  bottom: 32px;
+  right: 40px;
+  background-color: #0053d4;
+  box-shadow: var(--mantine-shadow-lg);
+}
+
+.bookings-page__fab:hover {
+  background-color: #0053d4;
+}
+
+.bookings-page__fab-plus {
+  color: white;
+  margin-right: 10px;
+}

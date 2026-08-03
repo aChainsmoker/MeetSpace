@@ -1,0 +1,16 @@
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='0'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='1'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='2'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='3'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='4'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='5'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='6'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='7'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='8'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='19'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='20'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='21'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='22'],
+.mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='23'] {
+  display: none;
+}

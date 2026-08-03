@@ -1,0 +1,80 @@
+.room-detail-card {
+  width: 380px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.room-detail-card__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.room-detail-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.room-detail-card__close.room-detail-card__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-dark-6);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.room-detail-card__close:hover {
+  background-color: var(--mantine-color-gray-2);
+}
+
+.room-detail-card__body {
+  padding: 16px;
+}
+
+.room-detail-card__section {
+  margin-top: 16px;
+}
+
+.room-detail-card__amenities {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 12%;
+  row-gap: 20px;
+}
+
+.room-detail-card__amenity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  text-align: center;
+}
+
+.room-detail-card__booking-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.room-detail-card__booking-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.room-detail-card .mantine-Accordion-item {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.room-detail-card .mantine-Accordion-chevron[data-rotate] {
+  transform: rotate(90deg);
+}

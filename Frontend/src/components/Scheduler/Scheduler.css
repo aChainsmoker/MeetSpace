@@ -1,0 +1,124 @@
+.scheduler {
+  width: 100%;
+}
+
+.scheduler__legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.scheduler__event {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  padding: 4px 8px;
+  border-left: 4px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.scheduler__event[data-own='true'] {
+  background-color: rgba(34, 139, 230, 0.15);
+  border-left-color: #228be6;
+}
+
+.scheduler__event[data-own='true'] .scheduler__event-title {
+  color: #228be6;
+}
+
+.scheduler__event[data-own='true'] .scheduler__event-time {
+  color: #228be6;
+}
+
+.scheduler__event:not([data-own='true']) {
+  background-color: rgba(253, 126, 20, 0.15);
+  border-left-color: #fd7e14;
+}
+
+.scheduler__event:not([data-own='true']) .scheduler__event-title {
+  color: #fd7e14;
+}
+
+.scheduler__event:not([data-own='true']) .scheduler__event-time {
+  color: #fd7e14;
+}
+
+.scheduler__event-title {
+  padding-inline-start: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.scheduler__event-time {
+  padding-inline-start: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.scheduler__event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scheduler__event-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mantine-color-text);
+}
+
+.scheduler__event-card-time {
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+
+.scheduler__event-card-description {
+  font-size: 13px;
+  color: var(--mantine-color-dimmed);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.scheduler__channel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  height: 100%;
+}
+
+.scheduler__channel-image {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.scheduler__channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.scheduler__channel-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--mantine-color-text);
+}
+
+.scheduler__channel-capacity {
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}

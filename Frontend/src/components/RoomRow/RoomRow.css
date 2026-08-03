@@ -1,0 +1,8 @@
+.room-row {
+  width: 100%;
+  cursor: pointer;
+}
+
+.room-row:hover {
+  border-color: var(--mantine-color-blue-4);
+}

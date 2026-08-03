@@ -1,0 +1,11 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f1f3f5;
+}
+
+[data-mantine-color-scheme='dark'] .auth-page {
+  background-color: var(--mantine-color-dark-8);
+}

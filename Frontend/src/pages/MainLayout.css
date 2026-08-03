@@ -1,0 +1,40 @@
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-layout__content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px 40px;
+  background-color: #f1f3f5;
+}
+
+[data-mantine-color-scheme='dark'] .main-layout__content {
+  background-color: var(--mantine-color-dark-7);
+}
+
+.main-layout__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.main-layout__greeting::after {
+  content: "👋";
+  margin-left: 10px;
+}
+
+.main-layout__add-btn {
+  background-color: #0053d4;
+}
+
+.main-layout__add-btn:hover {
+  background-color: #0053d4;
+}
+
+.add-btn__plus {
+  color: white;
+  margin-right: 10px;
+}
