@@ -1,6 +1,7 @@
-import {Card, Text, Badge, Group, Image} from '@mantine/core';
-import {UserIcon, MapPinIcon} from '@phosphor-icons/react';
-import {GetRoomResponse} from '@/services/RoomService';
+import {Badge, Card, Group, Image, Text} from '@mantine/core';
+import {MapPinIcon, UserIcon} from '@phosphor-icons/react';
+import "@/components/RoomCard/RoomCard.css"
+import {GetRoomResponse} from "@/models/GetRoomResponse";
 
 interface RoomCardProps {
     room: GetRoomResponse;
@@ -12,35 +13,44 @@ interface RoomCardProps {
 export default function RoomCard({room, occupiedUntil, onClick, selected}: RoomCardProps) {
     return (
         <Card
-            w={300}
+            w={{base: 150, md: 300}}
             withBorder
             radius="md"
             shadow="sm"
             padding="lg"
             onClick={onClick}
-            style={{
-                cursor: 'pointer',
-            }}
+            className="room-card"
         >
             <Card.Section>
-                <Image src={room.photo} h={160} alt={room.name}/>
+                <Image src={room.photo} h={{base: 80, md: 160}} alt={room.name}/>
             </Card.Section>
-
-            <Text fw={500} size="md" mt="sm" lineClamp={1}>
+            <Text
+                fw={500}
+                size="md"
+                mt="sm"
+                lineClamp={1}
+            >
                 {room.name}
             </Text>
-
-            <Group gap="lg" mt={4}>
+            <Group
+                className="room-card__data"
+                mt={4}
+            >
                 <Group gap="0.25em">
                     <UserIcon size={14}/>
-                    <Text size="sm" c="dimmed">{room.capacity} мест</Text>
+                    <Text
+                        size="sm"
+                        c="dimmed"
+                    >{room.capacity} мест</Text>
                 </Group>
                 <Group gap="0.25em">
                     <MapPinIcon size={14}/>
-                    <Text size="sm" c="dimmed">{room.floor} этаж</Text>
+                    <Text
+                        size="sm"
+                        c="dimmed"
+                    >{room.floor} этаж</Text>
                 </Group>
             </Group>
-
             <Badge
                 mt="sm"
                 color={occupiedUntil ? 'yellow' : 'green'}

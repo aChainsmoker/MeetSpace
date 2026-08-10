@@ -75,7 +75,7 @@ public class AuthController : ControllerBase
         {
             HttpOnly = true,
             Secure = true,
-            SameSite = SameSiteMode.Lax,
+            SameSite = SameSiteMode.None,
             Expires = tokenName == _tokenIdentifiers.RefreshTokenIdentifier
                 ? DateTime.UtcNow.AddDays(_refreshTokenSettings.ExpiresInDays)
                 : null
@@ -84,6 +84,11 @@ public class AuthController : ControllerBase
 
     private void RemoveTokenFromCookie(string tokenName)
     {
-        HttpContext.Response.Cookies.Delete(tokenName);
+        HttpContext.Response.Cookies.Delete(tokenName, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+        });
     }
 }

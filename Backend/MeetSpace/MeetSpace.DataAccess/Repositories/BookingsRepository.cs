@@ -72,10 +72,10 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
         var bookings = _dbContext.Bookings.AsNoTracking();
         bookings = FilterBookings(new BookingsFilter
         {
-            StartDate = DateOnly.FromDateTime(booking.StartOfBookingTime),
-            EndDate = DateOnly.FromDateTime(booking.StartOfBookingTime),
-            StartTime = TimeOnly.FromTimeSpan(booking.StartOfBookingTime.TimeOfDay),
-            EndTime = TimeOnly.FromTimeSpan(booking.EndOfBookingTime.TimeOfDay),
+            StartDate = booking.BookingDate,
+            EndDate = booking.BookingDate,
+            StartTime = booking.StartOfBookingTime,
+            EndTime = booking.EndOfBookingTime,
         }, bookings);
         bookings = bookings.Where(x => x.RoomId == booking.RoomId);
 
@@ -87,17 +87,19 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
         if (filter.StartDate != null && filter.EndDate != null)
         {
             bookings = bookings.Where(x =>
-                DateOnly.FromDateTime(x.StartOfBookingTime) >= filter.StartDate &&
-                DateOnly.FromDateTime(x.EndOfBookingTime) <= filter.EndDate);
+                x.BookingDate >= filter.StartDate &&
+                x.BookingDate <= filter.EndDate);
         }
 
         if (filter.StartTime != null && filter.EndTime != null)
         {
             bookings = bookings.Where(x =>
-                (x.StartOfBookingTime.TimeOfDay >= ((TimeOnly)filter.StartTime).ToTimeSpan() &&
-                 x.StartOfBookingTime.TimeOfDay <= ((TimeOnly)filter.EndTime).ToTimeSpan()) ||
-                (x.EndOfBookingTime.TimeOfDay <= ((TimeOnly)filter.EndTime).ToTimeSpan() &&
-                 x.EndOfBookingTime.TimeOfDay >= ((TimeOnly)filter.StartTime).ToTimeSpan()));
+                (x.StartOfBookingTime >= ((TimeOnly)filter.StartTime) &&
+                 x.StartOfBookingTime <= ((TimeOnly)filter.EndTime)) ||
+                (x.EndOfBookingTime >= ((TimeOnly)filter.StartTime) &&
+                 x.EndOfBookingTime <= ((TimeOnly)filter.EndTime)) ||
+                (x.StartOfBookingTime <= ((TimeOnly)filter.StartTime) &&
+                 x.EndOfBookingTime >= ((TimeOnly)filter.EndTime)));
         }
 
         if (filter.Capacity != null)

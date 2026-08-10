@@ -1,25 +1,10 @@
-import { apiRequest } from '@/services/apiClient';
-
-export interface GetRoomEquipmentResponse {
-  id: string;
-  name: string;
-}
-
-export interface GetRoomResponse {
-  id: string;
-  name: string;
-  capacity: number;
-  floor: number;
-  description: string;
-  isActive: boolean;
-  photo: string;
-  roomEquipments: GetRoomEquipmentResponse[];
-}
+import {apiRequest} from '@/api/apiClient';
+import {GetRoomResponse} from "@/models/GetRoomResponse";
 
 export async function getRooms(): Promise<GetRoomResponse[]> {
-  return apiRequest<GetRoomResponse[]>('/rooms');
+    return apiRequest<GetRoomResponse[]>('/rooms');
 }
 
 export async function getRoomById(id: string): Promise<GetRoomResponse> {
-  return apiRequest<GetRoomResponse>(`/rooms/${id}`);
+    return apiRequest<GetRoomResponse>(`/rooms/${id}`);
 }

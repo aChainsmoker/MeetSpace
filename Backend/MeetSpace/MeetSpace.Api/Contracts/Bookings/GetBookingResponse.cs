@@ -11,6 +11,7 @@ public class GetBookingResponse
     public Guid UserId { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
-    public DateTime StartOfBookingTime { get; set; }
-    public DateTime EndOfBookingTime { get; set; }
+    public TimeOnly StartOfBookingTime { get; set; }
+    public TimeOnly EndOfBookingTime { get; set; }
+    public DateOnly BookingDate { get; set; }
 }

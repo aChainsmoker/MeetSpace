@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
@@ -10,6 +10,7 @@ import '@mantine/dates/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/schedule/styles.css';
 import '@mantine/dropzone/styles.css';
+import './styles/main.css';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -17,8 +18,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
+        <App/>
     </React.StrictMode>
 );

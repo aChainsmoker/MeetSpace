@@ -1,39 +1,39 @@
 .auth-form {
-  max-width: 420px;
-  width: 100%;
+    max-width: 420px;
+    width: 100%;
 }
 
 .auth-form__title {
-  color: #053184;
-  margin-bottom: 8px;
+    color: var(--blue-title);
+    margin-bottom: 8px;
 }
 
 .auth-form__subtitle {
-  color: black;
-  margin-bottom: 32px;
+    color: black;
+    margin-bottom: 32px;
 }
 
 .auth-form__inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .auth-form__checkbox {
-  margin: 24px 0;
+    margin: 24px 0;
 }
 
 .auth-form__submit {
-  --button-bg: #0053d4;
-  --button-hover: #0044b3;
-  --button-color: #fff;
-  margin-bottom: 32px;
+    --button-bg: var(--button-submit);
+    --button-hover: var(--button-submit-hover);
+    --button-color: white;
+    margin-bottom: 32px;
 }
 
 .auth-form__footer {
-  text-align: center;
+    text-align: center;
 }
 
 .auth-form__toggle {
-  cursor: pointer;
+    cursor: pointer;
 }

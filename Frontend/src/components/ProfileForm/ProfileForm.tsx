@@ -1,133 +1,164 @@
-import { useEffect, useState } from 'react';
-import { Button, Image, Paper, Stack, Text, TextInput } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { UploadSimpleIcon } from '@phosphor-icons/react';
-import { GetUserResponse, UpdateUserRequest } from '@/services/UserService';
+import {useEffect, useState} from 'react';
+import {Button, Image, Paper, Stack, Text, TextInput} from '@mantine/core';
+import {useForm} from '@mantine/form';
+import {notifications} from '@mantine/notifications';
+import {Dropzone, FileWithPath, IMAGE_MIME_TYPE} from '@mantine/dropzone';
+import {UploadSimpleIcon} from '@phosphor-icons/react';
 import '@/components/ProfileForm/ProfileForm.css';
+import {GetUserResponse} from "@/models/GetUserResponse";
+import {UpdateUserRequest} from "@/models/UpdateUserRequest";
 
 interface ProfileFormProps {
-  user: GetUserResponse | null;
-  imageUrl: string | null;
-  onSave: (payload: UpdateUserRequest, file: File | null) => Promise<void>;
+    user: GetUserResponse | null;
+    imageUrl: string | null;
+    onSave: (payload: UpdateUserRequest, file: File | null) => Promise<void>;
 }
 
-export default function ProfileForm({ user, imageUrl, onSave }: ProfileFormProps) {
-  const [firstName, setFirstName] = useState(user?.firstName ?? '');
-  const [lastName, setLastName] = useState(user?.lastName ?? '');
-  const [email, setEmail] = useState(user?.email ?? '');
-  const [newFile, setNewFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [saving, setSaving] = useState(false);
+interface ProfileFormValues {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
 
-  useEffect(() => {
-    if (!user) return;
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.email);
-  }, [user]);
+export default function ProfileForm({user, imageUrl, onSave}: ProfileFormProps) {
+    const [newFile, setNewFile] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const [success, setSuccess] = useState('');
+    const [saving, setSaving] = useState(false);
 
-  const selectFile = (files: FileWithPath[]) => {
-    const file = files[0];
-    if (!file) return;
-    setNewFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
+    const form = useForm<ProfileFormValues>({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+        },
+        validate: {
+            firstName: (value) => (value.trim() ? null : 'Введите имя'),
+            lastName: (value) => (value.trim() ? null : 'Введите фамилию'),
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Введите корректный email'),
+        },
+    });
 
-  const handleSave = async () => {
-    setError('');
-    setSuccess('');
-    if (!firstName.trim() || !lastName.trim() || !email.trim()) {
-      setError('Заполните все поля');
-      return;
-    }
+    useEffect(() => {
+        if (!user) return;
+        form.setValues({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+        });
+    }, [user]);
 
-    const payload: UpdateUserRequest = {
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      email: email.trim(),
+    const selectFile = (files: FileWithPath[]) => {
+        const file = files[0];
+        if (!file) return;
+        setNewFile(file);
+        setPreviewUrl(URL.createObjectURL(file));
     };
 
-    setSaving(true);
-    try {
-      await onSave(payload, newFile);
-      setNewFile(null);
-      setPreviewUrl(null);
-      setSuccess('Данные сохранены');
-    } catch {
-      notifications.show({ color: 'red', message: 'Произошла ошибка при сохранении профиля' });
-    } finally {
-      setSaving(false);
-    }
-  };
+    const handleSave = async (values: ProfileFormValues) => {
+        setSuccess('');
 
-  return (
-    <Paper className="profile-form" shadow="xs" radius="md" p="xl" withBorder>
-      <div className="profile-form__grid">
-        <Stack className="profile-form__fields">
-          <TextInput
-            label="First Name"
-            placeholder="Введите имя"
-            value={firstName}
-            onChange={(event) => setFirstName(event.currentTarget.value)}
-          />
-          <TextInput
-            label="Last Name"
-            placeholder="Введите фамилию"
-            value={lastName}
-            onChange={(event) => setLastName(event.currentTarget.value)}
-          />
-          <TextInput
-            label="Email"
-            type="email"
-            placeholder="Введите email"
-            value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
-          />
-        </Stack>
+        const payload: UpdateUserRequest = {
+            firstName: values.firstName.trim(),
+            lastName: values.lastName.trim(),
+            email: values.email.trim(),
+        };
 
-        <DropzoneSection imageUrl={previewUrl ?? imageUrl} onSelect={selectFile} />
-      </div>
+        setSaving(true);
+        try {
+            await onSave(payload, newFile);
+            setNewFile(null);
+            setPreviewUrl(null);
+            setSuccess('Данные сохранены');
+        } catch {
+            notifications.show({color: 'red', message: 'Произошла ошибка при сохранении профиля'});
+        } finally {
+            setSaving(false);
+        }
+    };
 
-      {error && (
-        <Text c="red" size="sm" className="profile-form__feedback">
-          {error}
-        </Text>
-      )}
-      {success && (
-        <Text c="green" size="sm" className="profile-form__feedback">
-          {success}
-        </Text>
-      )}
-
-      <Button
-        className="profile-form__save"
-        size="lg"
-        loading={saving}
-        onClick={handleSave}
-        fullWidth
-      >
-        Сохранить
-      </Button>
-    </Paper>
-  );
+    return (
+        <Paper
+            className="profile-form"
+            shadow="xs"
+            radius="md"
+            p="xl"
+            withBorder
+        >
+            <form onSubmit={form.onSubmit(handleSave)}>
+                <div className="profile-form__grid">
+                    <Stack className="profile-form__fields">
+                        <TextInput
+                            label="First Name"
+                            placeholder="Введите имя"
+                            {...form.getInputProps('firstName')}
+                        />
+                        <TextInput
+                            label="Last Name"
+                            placeholder="Введите фамилию"
+                            {...form.getInputProps('lastName')}
+                        />
+                        <TextInput
+                            label="Email"
+                            type="email"
+                            placeholder="Введите email"
+                            {...form.getInputProps('email')}
+                        />
+                    </Stack>
+                    <DropzoneSection
+                        imageUrl={previewUrl ?? imageUrl}
+                        onSelect={selectFile}
+                    />
+                </div>
+                {success && (
+                    <Text
+                        c="green"
+                        size="sm"
+                        className="profile-form__feedback"
+                    >
+                        {success}
+                    </Text>
+                )}
+                <Button
+                    className="profile-form__save"
+                    size="lg"
+                    loading={saving}
+                    type="submit"
+                    fullWidth
+                >
+                    Сохранить
+                </Button>
+            </form>
+        </Paper>
+    );
 }
 
 interface DropzoneSectionProps {
-  imageUrl: string | null;
-  onSelect: (files: FileWithPath[]) => void;
+    imageUrl: string | null;
+    onSelect: (files: FileWithPath[]) => void;
 }
 
-function DropzoneSection({ imageUrl, onSelect }: DropzoneSectionProps) {
-  return (
-    <Dropzone className="profile-form__dropzone" p="0" accept={IMAGE_MIME_TYPE} maxSize={5 * 1024 ** 2} onDrop={onSelect}>
-      {imageUrl ? (
-        <Image className="profile-form__avatar" src={imageUrl} alt="Profile" />
-      ) : (
-        <UploadSimpleIcon size={64} color="#999" />
-      )}
-    </Dropzone>
-  );
+function DropzoneSection({imageUrl, onSelect}: DropzoneSectionProps) {
+    return (
+        <Dropzone
+            className="profile-form__dropzone"
+            p="0"
+            accept={IMAGE_MIME_TYPE}
+            maxSize={5 * 1024 ** 2}
+            onDrop={onSelect}
+        >
+            {imageUrl ?
+                (
+                    <Image className="profile-form__avatar" src={imageUrl} alt="Profile"/>
+                )
+                :
+                (
+                    <UploadSimpleIcon
+                        size={64}
+                        color="grey"
+                    />
+                )
+            }
+        </Dropzone>
+    );
 }

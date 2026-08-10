@@ -12,5 +12,5 @@
 .mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='21'],
 .mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='22'],
 .mantine-TimePicker-controlsListGroup > :first-child .mantine-TimePicker-controlsList [data-value='23'] {
-  display: none;
+    display: none;
 }

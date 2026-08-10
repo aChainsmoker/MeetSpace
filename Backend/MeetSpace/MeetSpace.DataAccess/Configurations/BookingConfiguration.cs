@@ -24,6 +24,9 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .Property(x=>x.EndOfBookingTime)
             .IsRequired();
         builder
+            .Property(x=>x.BookingDate)
+            .IsRequired();
+        builder
             .HasOne(x => x.User)
             .WithMany()
             .HasForeignKey(x => x.UserId)

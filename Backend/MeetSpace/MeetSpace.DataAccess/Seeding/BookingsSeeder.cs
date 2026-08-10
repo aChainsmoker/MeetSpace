@@ -10,6 +10,7 @@ namespace MeetSpace.DataAccess.Seeding;
 public class BookingsSeeder
 {
     private const int BookingsPerRoom = 2;
+    private const int DaysOfBookings = 14;
     private const int MinBookingDurationMinutes = 30;
     private const int MaxBookingDurationMinutes = 90;
     private static readonly TimeSpan DurationStep = TimeSpan.FromMinutes(15);
@@ -57,31 +58,36 @@ public class BookingsSeeder
         }
 
         var random = new Random();
-        var workDayStart = DateTime.UtcNow.Date.Add(_bookingSettings.WorkDayStart.ToTimeSpan());
-        var workDayEnd = DateTime.UtcNow.Date.Add(_bookingSettings.WorkDayEnd.ToTimeSpan());
+        var workDayStart = _bookingSettings.WorkDayStart;
+        var workDayEnd = _bookingSettings.WorkDayEnd;
 
         var bookings = new List<Booking>();
         var counter = 1;
 
-        foreach (var room in rooms)
+        for (var j = 0; j < DaysOfBookings; j++)
         {
-            for (var i = 0; i < BookingsPerRoom; i++)
+            foreach (var room in rooms)
             {
-                var (start, end) = GenerateNonOverlappingSlot(random, workDayStart, workDayEnd, bookings.Where(b => b.RoomId == room.Id));
-                var user = users[random.Next(users.Count)];
-
-                bookings.Add(new Booking
+                for (var i = 0; i < BookingsPerRoom; i++)
                 {
-                    Id = Guid.NewGuid(),
-                    Title = $"Бронирование {counter}",
-                    Description = $"Описание бронирования {counter}",
-                    UserId = user.Id,
-                    RoomId = room.Id,
-                    StartOfBookingTime = start,
-                    EndOfBookingTime = end
-                });
+                    var (start, end) = GenerateNonOverlappingSlot(random, workDayStart, workDayEnd,
+                        bookings.Where(b => b.RoomId == room.Id && b.BookingDate == DateOnly.FromDateTime(DateTime.UtcNow.AddDays(j))));
+                    var user = users[random.Next(users.Count)];
 
-                counter++;
+                    bookings.Add(new Booking
+                    {
+                        Id = Guid.NewGuid(),
+                        Title = $"Бронирование {counter}",
+                        Description = $"Описание бронирования {counter}",
+                        UserId = user.Id,
+                        RoomId = room.Id,
+                        StartOfBookingTime = start,
+                        EndOfBookingTime = end,
+                        BookingDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(j)),
+                    });
+
+                    counter++;
+                }
             }
         }
 
@@ -89,10 +95,10 @@ public class BookingsSeeder
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private (DateTime Start, DateTime End) GenerateNonOverlappingSlot(
+    private (TimeOnly Start, TimeOnly End) GenerateNonOverlappingSlot(
         Random random,
-        DateTime workDayStart,
-        DateTime workDayEnd,
+        TimeOnly workDayStart,
+        TimeOnly workDayEnd,
         IEnumerable<Booking> existingBookings)
     {
         var existing = existingBookings
@@ -100,7 +106,7 @@ public class BookingsSeeder
             .OrderBy(s => s.Start)
             .ToList();
 
-        var slots = new List<(DateTime Start, DateTime End)>();
+        var slots = new List<(TimeOnly Start, TimeOnly End)>();
         var cursor = workDayStart;
 
         foreach (var booking in existing)
@@ -124,7 +130,6 @@ public class BookingsSeeder
         var validSlots = slots
             .Where(s => s.End - s.Start >= TimeSpan.FromMinutes(MinBookingDurationMinutes))
             .ToList();
-
         var slot = validSlots[random.Next(validSlots.Count)];
 
         var durationMinutes = GetRandomDurationMinutes(random, slot);
@@ -134,7 +139,7 @@ public class BookingsSeeder
         return (start, start.AddMinutes(durationMinutes));
     }
 
-    private static int GetRandomDurationMinutes(Random random, (DateTime Start, DateTime End) slot)
+    private static int GetRandomDurationMinutes(Random random, (TimeOnly Start, TimeOnly End) slot)
     {
         var slotMinutes = (int)(slot.End - slot.Start).TotalMinutes;
         var maxDuration = Math.Min(MaxBookingDurationMinutes, slotMinutes);
@@ -144,7 +149,7 @@ public class BookingsSeeder
         return MinBookingDurationMinutes + steps * (int)DurationStep.TotalMinutes;
     }
 
-    private static DateTime RandomTime(Random random, DateTime start, DateTime end)
+    private static TimeOnly RandomTime(Random random, TimeOnly start, TimeOnly end)
     {
         var totalMinutes = (int)(end - start).TotalMinutes;
         var offset = random.Next(0, totalMinutes + 1);

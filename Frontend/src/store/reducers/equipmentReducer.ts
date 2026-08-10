@@ -1,31 +1,28 @@
-import {
-  EQUIPMENT_FETCH_LOAD,
-  EQUIPMENT_FETCH,
-  RootAction,
-} from '../actions/types';
-import { RoomEquipment } from '@/services/EquipmentService';
+import {EQUIPMENT_FETCH, EQUIPMENT_FETCH_LOAD, EquipmentAction} from '../actions/types';
+
+import {RoomEquipment} from "@/models/RoomEquipment";
 
 export interface EquipmentState {
-  equipment: RoomEquipment[];
-  isLoading: boolean;
+    equipment: RoomEquipment[];
+    isLoading: boolean;
 }
 
 const initialState: EquipmentState = {
-  equipment: [],
-  isLoading: false,
+    equipment: [],
+    isLoading: false,
 };
 
-const equipmentReducer = (state: EquipmentState | undefined = initialState, action: RootAction): EquipmentState => {
-  switch (action.type) {
-    case EQUIPMENT_FETCH_LOAD:
-      return { ...state, isLoading: true };
+const equipmentReducer = (state: EquipmentState | undefined = initialState, action: EquipmentAction): EquipmentState => {
+    switch (action.type) {
+        case EQUIPMENT_FETCH_LOAD:
+            return {...state, isLoading: true};
 
-    case EQUIPMENT_FETCH:
-      return { ...state, isLoading: false, equipment: action.payload };
+        case EQUIPMENT_FETCH:
+            return {...state, isLoading: false, equipment: action.payload};
 
-    default:
-      return state;
-  }
+        default:
+            return state;
+    }
 };
 
 export default equipmentReducer;

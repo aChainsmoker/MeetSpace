@@ -14,14 +14,16 @@ public class BookingsService : IBookingsService
     private readonly IBookingsRepositoryHelper _bookingsRepositoryHelper;
     private readonly BookingSettings _bookingSettings;
 
-    public BookingsService(IBookingsRepository bookingsRepository, IOptions<BookingSettings> bookingSettings, IBookingsRepositoryHelper bookingsRepositoryHelper)
+    public BookingsService(IBookingsRepository bookingsRepository, IOptions<BookingSettings> bookingSettings,
+        IBookingsRepositoryHelper bookingsRepositoryHelper)
     {
         _bookingsRepository = bookingsRepository;
         _bookingsRepositoryHelper = bookingsRepositoryHelper;
         _bookingSettings = bookingSettings.Value;
     }
-    
-    public async Task<List<Booking>> GetBookingsAsync(BookingsFilter filter, CancellationToken cancellationToken = default)
+
+    public async Task<List<Booking>> GetBookingsAsync(BookingsFilter filter,
+        CancellationToken cancellationToken = default)
     {
         return await _bookingsRepository.GetBookingsAsync(filter, cancellationToken);
     }
@@ -43,20 +45,22 @@ public class BookingsService : IBookingsService
         {
             throw new EntityNotFoundException("Booking was not found");
         }
-        
+
         return booking;
     }
 
     public async Task CreateBookingAsync(Booking booking, CancellationToken cancellationToken = default)
     {
         CheckIfBookingIsInProperTimeInterval(booking);
+        CheckIfBookingHasProperTimeSet(booking);
         await CheckIfTimeSpanIsFree(booking);
         await _bookingsRepository.CreateBookingAsync(booking, cancellationToken);
     }
 
     public async Task UpdateBookingAsync(Booking booking, CancellationToken cancellationToken = default)
     {
-        CheckIfBookingIsInProperTimeInterval(booking);    
+        CheckIfBookingIsInProperTimeInterval(booking);
+        CheckIfBookingHasProperTimeSet(booking);
         await CheckIfTimeSpanIsFree(booking);
         await _bookingsRepository.UpdateBookingAsync(booking, cancellationToken);
     }
@@ -68,8 +72,8 @@ public class BookingsService : IBookingsService
 
     private void CheckIfBookingIsInProperTimeInterval(Booking booking)
     {
-        if (booking.StartOfBookingTime.TimeOfDay < _bookingSettings.WorkDayStart.ToTimeSpan() ||
-            booking.EndOfBookingTime.TimeOfDay > _bookingSettings.WorkDayEnd.ToTimeSpan())
+        if (booking.StartOfBookingTime < _bookingSettings.WorkDayStart ||
+            booking.EndOfBookingTime > _bookingSettings.WorkDayEnd)
         {
             throw new InvalidDataException("Booking was not in the proper time interval");
         }
@@ -78,9 +82,30 @@ public class BookingsService : IBookingsService
     private async Task CheckIfTimeSpanIsFree(Booking booking)
     {
         var bookingsInTimeSpan = await _bookingsRepositoryHelper.GetBookingsForTheTimeSpanAndTheRoomAsync(booking);
+        if (booking.Id != Guid.Empty)
+        {
+            bookingsInTimeSpan = bookingsInTimeSpan
+                .Where(x => x.Id != booking.Id)
+                .ToList();
+        }
+
         if (bookingsInTimeSpan.Count != 0)
         {
             throw new InvalidDataException("This room is already taken at this time");
+        }
+    }
+
+    private void CheckIfBookingHasProperTimeSet(Booking booking)
+    {
+        if (booking.EndOfBookingTime < booking.StartOfBookingTime)
+        {
+            throw new InvalidDataException("Booking start time must be before booking end time");
+        }
+        if (booking.BookingDate < DateOnly.FromDateTime(DateTime.UtcNow) ||
+            (booking.BookingDate == DateOnly.FromDateTime(DateTime.UtcNow) &&
+             booking.StartOfBookingTime < TimeOnly.FromDateTime(DateTime.UtcNow)))
+        {
+            throw new InvalidDataException("Booking must not be in the past");
         }
     }
 }

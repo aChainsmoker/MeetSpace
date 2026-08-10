@@ -110,8 +110,9 @@ namespace MeetSpace.DataAccess.Migrations
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     RoomId = table.Column<Guid>(type: "uuid", nullable: false),
-                    StartOfBookingTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndOfBookingTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    BookingDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    StartOfBookingTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
+                    EndOfBookingTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false)
                 },
                 constraints: table =>
                 {

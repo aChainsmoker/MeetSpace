@@ -1,0 +1,16 @@
+.room-card__data {
+    display: flex;
+    gap: 16px;
+}
+
+.room-card {
+    cursor: pointer;
+}
+
+@media (max-width: 62em) {
+    .room-card__data {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}

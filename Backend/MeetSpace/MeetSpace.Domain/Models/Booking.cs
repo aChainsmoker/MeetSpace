@@ -9,6 +9,7 @@ public class Booking
     public Guid UserId { get; set; }
     public Room Room { get; set; } = null!;
     public Guid RoomId { get; set; }
-    public DateTime StartOfBookingTime { get; set; }
-    public DateTime EndOfBookingTime { get; set; }
+    public DateOnly BookingDate {get; set;}
+    public TimeOnly StartOfBookingTime { get; set; }
+    public TimeOnly EndOfBookingTime { get; set; }
 }

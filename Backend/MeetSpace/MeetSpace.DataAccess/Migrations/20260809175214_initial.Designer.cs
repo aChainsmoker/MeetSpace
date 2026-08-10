@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MeetSpace.DataAccess.Migrations
 {
     [DbContext(typeof(MeetSpaceDbContext))]
-    [Migration("20260803092858_initial")]
+    [Migration("20260809175214_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -31,18 +31,21 @@ namespace MeetSpace.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateOnly>("BookingDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTime>("EndOfBookingTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<TimeOnly>("EndOfBookingTime")
+                        .HasColumnType("time without time zone");
 
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("StartOfBookingTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<TimeOnly>("StartOfBookingTime")
+                        .HasColumnType("time without time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()

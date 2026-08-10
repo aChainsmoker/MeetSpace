@@ -1,10 +1,10 @@
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from './reducers';
-import { RootAction } from './actions/types';
+import {ThunkAction} from 'redux-thunk';
+import {RootState} from './reducers';
+import {RootAction} from './actions/types';
 
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  RootAction
+    ReturnType,
+    RootState,
+    undefined,
+    RootAction
 >;
