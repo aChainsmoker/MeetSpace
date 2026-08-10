@@ -48,7 +48,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsDockerEnvironment() || 
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();   
 app.UseCors(corsPolicyName);
-app.UseMiddleware<RefreshTokenAuthenticationMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

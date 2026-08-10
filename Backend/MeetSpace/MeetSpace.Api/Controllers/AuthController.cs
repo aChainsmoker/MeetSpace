@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MeetSpace.Api.Contracts;
+using MeetSpace.Api.Contracts.Auth;
 using MeetSpace.Api.Contracts.Users;
 using MeetSpace.Application.Abstractions.Services;
 using MeetSpace.Domain.Abstractions.Services;
 using MeetSpace.Domain.Models;
+using MeetSpace.Domain.Models.Tokens;
 using MeetSpace.Infrastructure.Auth.Tokens.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,14 +19,12 @@ public class AuthController : ControllerBase
     private readonly IUsersService _usersService;
     private readonly IMapper _mapper;
     private readonly RefreshTokenSettings _refreshTokenSettings;
-    private readonly TokenIdentifiers _tokenIdentifiers;
 
-    public AuthController(IUsersService usersService, IOptions<TokenIdentifiers> tokenIdentifiers, IOptions<RefreshTokenSettings> refreshTokenSettings, IMapper mapper)
+    public AuthController(IUsersService usersService, IOptions<RefreshTokenSettings> refreshTokenSettings, IMapper mapper)
     {
         _usersService = usersService;
         _mapper = mapper;
         _refreshTokenSettings = refreshTokenSettings.Value;
-        _tokenIdentifiers = tokenIdentifiers.Value;
     }
 
     [HttpPost("register")]
@@ -40,55 +40,15 @@ public class AuthController : ControllerBase
     {
         var (accessToken, refreshToken) =
             await _usersService.LoginUserAsync(loginRequest.Email, loginRequest.Password, cancellationToken);
-        AddTokenToCookie(_tokenIdentifiers.AccessTokenIdentifier, accessToken);
-        if (loginRequest.RememberMe)
-        {
-            AddTokenToCookie(_tokenIdentifiers.RefreshTokenIdentifier, refreshToken);
-        }
 
-        return Ok();
+        return Ok(new AuthResponse { AccessToken = accessToken, RefreshToken = refreshToken });
     }
     
     [HttpPost("refresh")]
-    public async Task<ActionResult> RefreshAccessTokenAsync([FromServices] IRefreshTokensService refreshTokensService , CancellationToken cancellationToken = default)
+    public async Task<ActionResult> RefreshAccessTokenAsync([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken = default)
     {
-        var refreshToken = Request.Cookies[_tokenIdentifiers.RefreshTokenIdentifier] ??
-                           throw new UnauthorizedAccessException("Refresh token was not found");
-        var accessToken = await _usersService.LoginUserAsync(refreshToken, cancellationToken);
-        AddTokenToCookie(_tokenIdentifiers.AccessTokenIdentifier, accessToken);
+        var accessToken = await _usersService.LoginUserAsync(request.RefreshToken, cancellationToken);
 
-        return Ok();
-    }
-
-    [HttpDelete("logout")]
-    public ActionResult LogoffAsync()
-    {
-        RemoveTokenFromCookie(_tokenIdentifiers.AccessTokenIdentifier);
-        RemoveTokenFromCookie(_tokenIdentifiers.RefreshTokenIdentifier);
-        
-        return Ok();
-    }
-    
-    private void AddTokenToCookie(string tokenName, string token)
-    {
-        HttpContext.Response.Cookies.Append(tokenName, token, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-            Expires = tokenName == _tokenIdentifiers.RefreshTokenIdentifier
-                ? DateTime.UtcNow.AddDays(_refreshTokenSettings.ExpiresInDays)
-                : null
-        });
-    }
-
-    private void RemoveTokenFromCookie(string tokenName)
-    {
-        HttpContext.Response.Cookies.Delete(tokenName, new CookieOptions
-        {
-            HttpOnly = true,
-            Secure = true,
-            SameSite = SameSiteMode.None,
-        });
+        return Ok(new AuthResponse { AccessToken = accessToken, RefreshToken = request.RefreshToken });
     }
 }

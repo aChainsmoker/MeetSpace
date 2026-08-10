@@ -1,4 +1,5 @@
 import {ApiError} from "@/api/apiError";
+import {getAccessToken, getRefreshToken, setTokens, clearTokens, isRememberedSession} from "@/api/tokenStorage";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -9,16 +10,48 @@ interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
 
 let unauthorizedHandler: (() => void) | null = null;
 
+let refreshPromise: Promise<string | null> | null = null;
+
 export function setUnauthorizedHandler(handler: (() => void) | null): void {
     unauthorizedHandler = handler;
 }
 
-export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
+async function refreshAccessToken(): Promise<string | null> {
+    if (!refreshPromise) {
+        refreshPromise = (async () => {
+            const refreshToken = getRefreshToken();
+            if (!refreshToken) return null;
+
+            const res = await fetch(`${API_URL}/auth/refresh`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({refreshToken}),
+            });
+
+            if (!res.ok) {
+                clearTokens();
+                return null;
+            }
+
+            const data = await res.json();
+            setTokens(data, isRememberedSession());
+            return data.accessToken as string;
+        })().finally(() => {
+            refreshPromise = null;
+        });
+    }
+
+    return refreshPromise;
+}
+
+async function sendRequest(path: string, options: ApiRequestOptions = {}): Promise<Response> {
     const {body, ...rest} = options;
-    const res = await fetch(`${API_URL}${path}`, {
-        credentials: 'include',
+    const accessToken = getAccessToken();
+
+    return fetch(`${API_URL}${path}`, {
         ...rest,
         headers: {
+            ...(accessToken ? {'Authorization': `Bearer ${accessToken}`} : {}),
             ...(body !== undefined && !(body instanceof FormData) ? {'Content-Type': 'application/json'} : {}),
             ...(rest.headers as Record<string, string> | undefined),
         },
@@ -27,24 +60,41 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
                 ? (body as BodyInit)
                 : JSON.stringify(body),
     });
+}
 
-    if (!res.ok) {
-        const text = await res.text();
-        let detail: string | undefined;
-        const parsed = JSON.parse(text);
-        if (typeof parsed.detail === 'string') {
-            detail = parsed.detail;
-        }
-        if (res.status === 401) {
+export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
+    let response = await sendRequest(path, options);
+
+    if (response.status === 401) {
+        const newAccessToken = await refreshAccessToken();
+        if (newAccessToken) {
+            response = await sendRequest(path, options);
+        } else {
+            clearTokens();
             if (!options.suppressUnauthorizedHandler) {
                 unauthorizedHandler?.();
             }
+            const text = await response.text();
+            throw new ApiError(response.status, text);
         }
-        console.error(`[API ${res.status}] ${detail || text}`);
-        throw new ApiError(res.status, detail || text, detail);
     }
 
-    const text = await res.text();
+    if (!response.ok) {
+        const text = await response.text();
+        let detail: string | undefined;
+        try {
+            const parsed = JSON.parse(text);
+            if (typeof parsed.detail === 'string') {
+                detail = parsed.detail;
+            }
+        } catch {
+            // тело не является json
+        }
+        console.error(`[API ${response.status}] ${detail || text}`);
+        throw new ApiError(response.status, detail || text, detail);
+    }
+
+    const text = await response.text();
     if (!text) return undefined as T;
     return JSON.parse(text) as T;
 }

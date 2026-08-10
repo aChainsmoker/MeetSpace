@@ -3,6 +3,7 @@ import {MantineProvider} from '@mantine/core';
 import {Notifications, notifications} from '@mantine/notifications';
 import {BrowserRouter, Route, Routes, useNavigate} from "react-router";
 import {setUnauthorizedHandler} from "@/api/apiClient";
+import {clearTokens} from "@/api/tokenStorage";
 import AuthPage from "@/pages/AuthPage";
 import MainLayout from "@/pages/MainLayout";
 import HomePage from "@/pages/HomePage";
@@ -19,6 +20,7 @@ function UnauthorizedRedirect() {
 
     useEffect(() => {
         setUnauthorizedHandler(() => {
+            clearTokens();
             notifications.clean();
             navigate('/authentication');
         });

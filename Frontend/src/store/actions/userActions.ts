@@ -1,6 +1,5 @@
 import {
     login as loginApi,
-    logout as logoutApi,
     register as registerApi,
 } from '@/services/AuthService';
 import {
@@ -12,6 +11,7 @@ import {
 } from '@/services/UserService';
 import {AppThunk} from '../thunk';
 import {USER_FETCH, USER_FETCH_IMAGE, USER_FETCH_LOAD, USER_LOGOUT,} from './types';
+import {setTokens, clearTokens} from "@/api/tokenStorage";
 import {GetUserResponse} from "@/models/GetUserResponse";
 import {UpdateUserRequest} from "@/models/UpdateUserRequest";
 import {AuthRegisterRequest} from "@/models/AuthRegisterRequest";
@@ -52,10 +52,11 @@ export const registerAsync = (data: AuthRegisterRequest): AppThunk<Promise<void>
 };
 
 export const loginAsync = (data: AuthLoginRequest): AppThunk<Promise<void>> => async () => {
-    await loginApi(data);
+    const response = await loginApi(data);
+    setTokens(response, data.rememberMe);
 };
 
 export const logoutAsync = (): AppThunk<Promise<void>> => async (dispatch) => {
-    await logoutApi();
+    clearTokens();
     dispatch(clearUser());
 };

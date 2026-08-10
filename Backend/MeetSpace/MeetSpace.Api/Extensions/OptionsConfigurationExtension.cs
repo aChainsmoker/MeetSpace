@@ -11,7 +11,6 @@ public static class OptionsConfigurationExtension
 {
     public static void ConfigureOptions(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<TokenIdentifiers>(configuration.GetSection(nameof(TokenIdentifiers)));
         services.Configure<RefreshTokenSettings>(configuration.GetSection(nameof(RefreshTokenSettings)));
         services.Configure<RolesSettings>(configuration.GetSection(nameof(RolesSettings)));
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));

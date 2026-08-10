@@ -12,7 +12,6 @@ public static class AuthenticationExtension
         IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
-        var tokenIdentifiers = configuration.GetSection(nameof(TokenIdentifiers)).Get<TokenIdentifiers>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(
                 JwtBearerDefaults.AuthenticationScheme,
@@ -27,18 +26,6 @@ public static class AuthenticationExtension
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings!.SecretKey)),
-                    };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            if (tokenIdentifiers?.AccessTokenIdentifier != null)
-                            {
-                                context.Token = context.Request.Cookies[tokenIdentifiers.AccessTokenIdentifier];
-                            }
-
-                            return Task.CompletedTask;
-                        }
                     };
                 });
     }
