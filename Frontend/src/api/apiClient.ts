@@ -1,5 +1,6 @@
 import {ApiError} from "@/api/apiError";
 import {getAccessToken, getRefreshToken, setTokens, clearTokens, isRememberedSession} from "@/api/tokenStorage";
+import {notifications} from "@mantine/notifications";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -88,7 +89,8 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
                 detail = parsed.detail;
             }
         } catch {
-            // тело не является json
+            notifications.show({color: 'red', message: 'Ответ от сервера содержит ошибку'});
+            throw new ApiError(response.status, text, "Body is not json");
         }
         console.error(`[API ${response.status}] ${detail || text}`);
         throw new ApiError(response.status, detail || text, detail);
