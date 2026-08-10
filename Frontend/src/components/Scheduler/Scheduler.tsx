@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import dayjs from 'dayjs';
 import {Badge, HoverCard, UnstyledButton} from '@mantine/core';
+import {useMediaQuery} from '@mantine/hooks';
 import {ResourcesDayView} from '@mantine/schedule';
 import '@/components/Scheduler/Scheduler.css';
 import {GetBookingResponse} from "@/models/GetBookingResponse";
@@ -75,7 +76,9 @@ export default function Scheduler({
         }));
     }, [bookings, currentUserId]);
 
-    const resourceLabelWidth = 200;
+    const isMobile = useMediaQuery('(max-width: 48em)');
+
+    const resourceLabelWidth = isMobile ? 120 : 200;
     const numberOfHours = Math.max(
         Math.floor(
             (Date.parse(`${dateStr}T${effectiveEnd}`) - Date.parse(`${dateStr}T${effectiveStart}`)) / 3_600_000,

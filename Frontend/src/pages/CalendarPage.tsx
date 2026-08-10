@@ -13,7 +13,7 @@ const START_TIME = '09:00:00';
 const END_TIME = '18:00:00';
 const INTERVAL_MINUTES = 15;
 const HOURS = parseInt(END_TIME.slice(0, 2), 10) - parseInt(START_TIME.slice(0, 2), 10);
-const SLOT_BORDER_ALLOWANCE = HOURS * (60 / INTERVAL_MINUTES) - 1 + 2;
+const SLOT_BORDER_ALLOWANCE = HOURS * (60 / INTERVAL_MINUTES);
 
 function toEvent(booking: GetBookingResponse, currentUserId: string | null): ScheduleEventData {
     return {
@@ -95,6 +95,7 @@ export default function CalendarPage() {
                             endTime={END_TIME}
                             withHeader={false}
                             mode="static"
+                            classNames={{event: 'calendar-page__schedule-event'}}
                             scrollAreaProps={{mah: dayHeight || undefined}}
                             renderEventBody={(event) => (
                                 <div className={`calendar-page__event calendar-page__event--${event.color}`}>

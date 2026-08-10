@@ -97,6 +97,8 @@
     gap: 12px;
     padding: 8px;
     height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .scheduler__channel-image {

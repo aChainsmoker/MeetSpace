@@ -36,6 +36,10 @@
     background-color: var(--button-submit);
 }
 
+.calendar-page--day .calendar-page__schedule-event {
+    z-index: 0;
+}
+
 .calendar-page__event {
     display: flex;
     flex-direction: column;
