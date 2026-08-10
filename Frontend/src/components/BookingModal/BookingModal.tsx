@@ -62,11 +62,20 @@ export default function BookingModal({
         validate: {
             roomId: (value) => (value ? null : 'Выберите переговорную'),
             date: (value) => (value ? null : 'Выберите дату'),
-            startTime: (value) => (value ? null : 'Укажите время начала'),
+            startTime: (value, values) => {
+                if (!value) return 'Укажите время начала';
+                if (values.date && new Date(`${values.date}T${value}`).getTime() < Date.now()) {
+                    return 'Время начала не может быть в прошлом';
+                }
+                return null;
+            },
             endTime: (value, values) => {
                 if (!value) return 'Укажите время окончания';
                 if (values.startTime && value <= values.startTime) {
                     return 'Время окончания должно быть позже времени начала';
+                }
+                if (values.date && new Date(`${values.date}T${value}`).getTime() < Date.now()) {
+                    return 'Время окончания не может быть в прошлом';
                 }
                 return null;
             },

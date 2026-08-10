@@ -5,7 +5,8 @@
   "scripts": {
     "start": "webpack serve",
     "build": "webpack --mode production",
-    "csscomb": "csscomb -c csscomb-template.json ./src"
+    "csscomb": "csscomb -c csscomb-template.json ./src",
+    "postinstall": "patch-package"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "@mantine/core": "^9.5.0",
     "@mantine/dates": "^9.5.0",
     "@mantine/dropzone": "^9.5.0",
+    "@mantine/form": "^9.5.1",
     "@mantine/hooks": "^9.5.0",
     "@mantine/notifications": "^9.5.0",
     "@mantine/schedule": "9.5.0",
@@ -29,6 +31,7 @@
     "@types/react-dom": "^19.2.3",
     "babel-loader": "^10.1.1",
     "bootstrap": "^5.3.8",
+    "classnames": "^2.5.1",
     "css-loader": "^7.1.4",
     "csscomb": "^4.3.0",
     "dotenv-webpack": "^9.0.0",
@@ -44,6 +47,7 @@
     "style-loader": "^4.0.0"
   },
   "devDependencies": {
+    "patch-package": "^8.0.1",
     "typescript": "^7.0.2",
     "webpack": "^5.109.0",
     "webpack-cli": "^7.2.1",

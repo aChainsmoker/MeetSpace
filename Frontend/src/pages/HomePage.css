@@ -31,8 +31,9 @@
 
 .filter-toggle__left {
     display: flex;
-    flex-shrink: 1;
+    flex-shrink: 0;
     align-items: center;
+    overflow: hidden;
     gap: 1em;
 }
 
@@ -88,5 +89,13 @@
     .capacity-filter,
     .amenities-filter {
         flex-basis: calc(50% - 8px);
+    }
+}
+
+@media (max-width: 48em) {
+    .filter-toggle__left {
+        gap: 0.5em;
+        flex-shrink: 0;
+        overflow: hidden;
     }
 }
