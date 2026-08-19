@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using MeetSpace.Api.Contracts.Bookings;
+using MeetSpace.Application.Abstractions.Utility;
 using MeetSpace.Domain.Abstractions.Services;
 using MeetSpace.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +16,13 @@ public class BookingsController : ControllerBase
     private readonly IBookingsService _bookingsService;
     private readonly IMapper _mapper;
     private readonly IRoomService _roomService;
+    private readonly ISpecificAuthorizationRulesEnforcer _authorizationRulesEnforcer;
 
-    public BookingsController(IBookingsService bookingsService, IMapper mapper, IRoomService roomService)
+    public BookingsController(IBookingsService bookingsService, IMapper mapper, IRoomService roomService, ISpecificAuthorizationRulesEnforcer authorizationRulesEnforcer)
     {
         _bookingsService = bookingsService;
         _roomService = roomService;
+        _authorizationRulesEnforcer = authorizationRulesEnforcer;
         _mapper = mapper;
     }
 
@@ -59,9 +62,9 @@ public class BookingsController : ControllerBase
     [Authorize]
     public async Task<ActionResult> UpdateBookingAsync([FromRoute]Guid id, [FromBody] UpdateBookingRequest bookingRequest, CancellationToken cancellationToken = default)
     {
+        await CheckOnRightsToModifyData(id);
         var booking = _mapper.Map<Booking>(bookingRequest);
         booking.Id = id;
-        booking.UserId = new Guid(GetCurrentUserId());
         await _bookingsService.UpdateBookingAsync(booking, cancellationToken);
         
         return Ok();
@@ -71,6 +74,7 @@ public class BookingsController : ControllerBase
     [Authorize]
     public async Task<ActionResult> CancelBookingAsync([FromRoute]Guid id, CancellationToken cancellationToken = default)
     {
+        await CheckOnRightsToModifyData(id);
         await _bookingsService.DeleteBookingAsync(id, cancellationToken);
         
         return Ok();
@@ -117,5 +121,11 @@ public class BookingsController : ControllerBase
         }
 
         return userId;
+    }
+
+    private async Task CheckOnRightsToModifyData(Guid bookingId)
+    {
+        var booking = await _bookingsService.GetBookingByIdAsync(bookingId);
+        _authorizationRulesEnforcer.CheckIfUserOwnsDataOrHasRightsToModifyIt(booking.UserId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MeetSpace.Application.Abstractions.Auth;
+﻿using MeetSpace.Api.Utility;
+using MeetSpace.Application.Abstractions.Auth;
 using MeetSpace.Application.Abstractions.Auth.Jwt;
 using MeetSpace.Application.Abstractions.Repositories;
 using MeetSpace.Application.Abstractions.Repositories.Tokens;
@@ -35,6 +36,7 @@ public static class ServicesInjectionExtension
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IFileStorageService, S3FileStorageService>();
         services.AddScoped<IBookingsRepositoryHelper, BookingsRepository>();
+        services.AddScoped<ISpecificAuthorizationRulesEnforcer, SpecificAuthorizationRulesEnforcer>();
         services.AddScoped<RoomEquipmentSeeder>();
         services.AddScoped<ManagerUserSeeder>();
         services.AddScoped<BookingsSeeder>();
