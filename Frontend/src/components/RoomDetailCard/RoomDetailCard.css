@@ -54,8 +54,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    column-gap: 12%;
-    row-gap: 20px;
+    gap: 20px 12%;
 }
 
 .room-detail-card__amenity {
@@ -90,13 +89,10 @@
     transform: rotate(90deg);
 }
 
-@media (max-width: 48em) {
+@media (width <= 48em) {
     .room-detail-card {
         position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+        inset: 0;
         width: auto;
         height: auto;
         z-index: 13;

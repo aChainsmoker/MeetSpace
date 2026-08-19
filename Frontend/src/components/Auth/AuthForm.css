@@ -27,6 +27,7 @@
     --button-bg: var(--button-submit);
     --button-hover: var(--button-submit-hover);
     --button-color: white;
+
     margin-bottom: 32px;
 }
 

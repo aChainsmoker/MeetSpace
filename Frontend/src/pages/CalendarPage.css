@@ -21,7 +21,7 @@
     height: 100%;
 }
 
-@media (max-width: 62em) {
+@media (width <= 62em) {
     .calendar-page--day {
         height: calc(100vh - 24px - 88px);
     }

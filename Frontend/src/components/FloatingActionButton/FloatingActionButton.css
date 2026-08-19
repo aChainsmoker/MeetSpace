@@ -19,7 +19,7 @@
     background-color: var(--button-submit);
 }
 
-@media (max-width: 62em) {
+@media (width <= 62em) {
     .floating_button {
         display: flex;
     }

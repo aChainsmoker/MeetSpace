@@ -18,7 +18,7 @@
     border-top-color: var(--mantine-color-dark-5);
 }
 
-@media (max-width: 62em) {
+@media (width <= 62em) {
     .bottom-nav {
         display: flex;
     }

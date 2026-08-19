@@ -61,7 +61,7 @@
 
 }
 
-@media (max-width: 88em) {
+@media (width <= 88em) {
     .home-page__rooms-header {
         display: flex;
         align-items: start;
@@ -92,7 +92,7 @@
     }
 }
 
-@media (max-width: 48em) {
+@media (width <= 48em) {
     .filter-toggle__left {
         gap: 0.5em;
         flex-shrink: 0;

@@ -43,7 +43,7 @@
     background-color: var(--button-submit);
 }
 
-@media (max-width: 48em) {
+@media (width <= 48em) {
     .profile-form__grid {
         flex-direction: column;
         align-items: stretch;

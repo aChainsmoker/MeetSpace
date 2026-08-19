@@ -1,4 +1,4 @@
-﻿.account-page {
+.account-page {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,7 +22,7 @@
     display: none;
 }
 
-@media (max-width: 62em) {
+@media (width <= 62em) {
     .account-page__settings {
         display: block;
     }
@@ -35,7 +35,7 @@
     }
 }
 
-@media (max-width: 48em) {
+@media (width <= 48em) {
     .account-page {
         min-height: calc(100vh - 24px - 88px);
     }

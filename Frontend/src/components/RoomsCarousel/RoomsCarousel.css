@@ -1,7 +1,4 @@
-﻿.rooms-carousel {
-}
-
-.rooms-carousel__slide {
+﻿.rooms-carousel__slide {
     padding: 4px;
     border-radius: var(--mantine-radius-md);
     background: transparent;
@@ -11,9 +8,4 @@
 
 .rooms-carousel__slide--selected {
     background: var(--user-owns);
-}
-
-@media (max-width: 62em) {
-    .rooms-carousel {
-    }
 }
