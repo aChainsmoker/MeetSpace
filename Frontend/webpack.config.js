@@ -34,7 +34,7 @@ module.exports = {
     new HtmlWebpackPlugin({
             template: './public/index.html',
         }),
-    new Dotenv({ systemvars:true }),
+    new Dotenv(),
     ],
   devServer: {
     port: 3000,
