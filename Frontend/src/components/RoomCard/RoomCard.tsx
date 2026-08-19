@@ -1,7 +1,7 @@
-import {Badge, Card, Group, Image, Text} from '@mantine/core';
-import {MapPinIcon, UserIcon} from '@phosphor-icons/react';
-import "@/components/RoomCard/RoomCard.css"
-import {GetRoomResponse} from "@/models/GetRoomResponse";
+import { Badge, Card, Group, Image, Text } from '@mantine/core';
+import { MapPinIcon, UserIcon } from '@phosphor-icons/react';
+import '@/components/RoomCard/RoomCard.css';
+import { GetRoomResponse } from '@/models/GetRoomResponse';
 
 interface RoomCardProps {
     room: GetRoomResponse;
@@ -9,10 +9,14 @@ interface RoomCardProps {
     onClick?: () => void;
 }
 
-export default function RoomCard({room, occupiedUntil, onClick}: RoomCardProps) {
+export default function RoomCard({
+    room,
+    occupiedUntil,
+    onClick,
+}: RoomCardProps) {
     return (
         <Card
-            w={{base: 150, md: 300}}
+            w={{ base: 150, md: 300 }}
             withBorder
             radius="md"
             shadow="sm"
@@ -21,33 +25,27 @@ export default function RoomCard({room, occupiedUntil, onClick}: RoomCardProps) 
             className="room-card"
         >
             <Card.Section>
-                <Image src={room.photo} h={{base: 80, md: 160}} alt={room.name}/>
+                <Image
+                    src={room.photo}
+                    h={{ base: 80, md: 160 }}
+                    alt={room.name}
+                />
             </Card.Section>
-            <Text
-                fw={500}
-                size="md"
-                mt="sm"
-                lineClamp={1}
-            >
+            <Text fw={500} size="md" mt="sm" lineClamp={1}>
                 {room.name}
             </Text>
-            <Group
-                className="room-card__data"
-                mt={4}
-            >
+            <Group className="room-card__data" mt={4}>
                 <Group gap="0.25em">
-                    <UserIcon size={14}/>
-                    <Text
-                        size="sm"
-                        c="dimmed"
-                    >{room.capacity} мест</Text>
+                    <UserIcon size={14} />
+                    <Text size="sm" c="dimmed">
+                        {room.capacity} мест
+                    </Text>
                 </Group>
                 <Group gap="0.25em">
-                    <MapPinIcon size={14}/>
-                    <Text
-                        size="sm"
-                        c="dimmed"
-                    >{room.floor} этаж</Text>
+                    <MapPinIcon size={14} />
+                    <Text size="sm" c="dimmed">
+                        {room.floor} этаж
+                    </Text>
                 </Group>
             </Group>
             <Badge

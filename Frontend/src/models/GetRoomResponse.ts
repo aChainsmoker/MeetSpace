@@ -1,4 +1,4 @@
-﻿import {GetRoomEquipmentResponse} from "@/models/GetRoomEquipmentResponse";
+﻿import { GetRoomEquipmentResponse } from '@/models/GetRoomEquipmentResponse';
 
 export interface GetRoomResponse {
     id: string;

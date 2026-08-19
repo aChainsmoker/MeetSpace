@@ -1,11 +1,11 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import dayjs from 'dayjs';
-import {Badge, HoverCard, UnstyledButton} from '@mantine/core';
-import {useMediaQuery} from '@mantine/hooks';
-import {ResourcesDayView} from '@mantine/schedule';
+import { Badge, HoverCard, UnstyledButton } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+import { ResourcesDayView } from '@mantine/schedule';
 import '@/components/Scheduler/Scheduler.css';
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {BookingsFilter} from "@/models/BookingsFilter";
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { BookingsFilter } from '@/models/BookingsFilter';
 
 interface SchedulerProps {
     date?: string;
@@ -18,7 +18,16 @@ interface SchedulerProps {
     onEventClick?: (booking: GetBookingResponse) => void;
 }
 
-export default function Scheduler({date, startTime, endTime, filter, bookings, currentUserId, onFetchBookings, onEventClick,}: SchedulerProps) {
+export default function Scheduler({
+    date,
+    startTime,
+    endTime,
+    filter,
+    bookings,
+    currentUserId,
+    onFetchBookings,
+    onEventClick,
+}: SchedulerProps) {
     const effectiveStart = `${startTime || '09:00'}:00`;
     const effectiveEnd = `${endTime || '18:59'}:00`;
     const [containerWidth, setContainerWidth] = useState(0);
@@ -51,7 +60,7 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
         return Array.from(seen.values()).map((room) => ({
             id: room.id,
             label: room.name,
-            payload: {photo: room.photo, capacity: room.capacity},
+            payload: { photo: room.photo, capacity: room.capacity },
         }));
     }, [bookings]);
 
@@ -63,7 +72,7 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
             end: `${b.bookingDate} ${b.endOfBookingTime}`,
             resourceId: b.room.id,
             color: 'blue',
-            payload: {isOwn: currentUserId === b.userId, booking: b},
+            payload: { isOwn: currentUserId === b.userId, booking: b },
         }));
     }, [bookings, currentUserId]);
 
@@ -72,19 +81,21 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
     const resourceLabelWidth = isMobile ? 120 : 200;
     const numberOfHours = Math.max(
         Math.floor(
-            (Date.parse(`${dateStr}T${effectiveEnd}`) - Date.parse(`${dateStr}T${effectiveStart}`)) / 3_600_000,
+            (Date.parse(`${dateStr}T${effectiveEnd}`) -
+                Date.parse(`${dateStr}T${effectiveStart}`)) /
+                3_600_000,
         ),
         1,
     );
     const slotWidth = containerWidth
-        ? Math.max(Math.floor((containerWidth - resourceLabelWidth) / numberOfHours), 130)
+        ? Math.max(
+              Math.floor((containerWidth - resourceLabelWidth) / numberOfHours),
+              130,
+          )
         : 150;
 
     return (
-        <div
-            className="scheduler"
-            ref={containerRef}
-        >
+        <div className="scheduler" ref={containerRef}>
             <ResourcesDayView
                 date={dateStr}
                 resources={resources}
@@ -97,7 +108,7 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
                 highlightBusinessHours
                 businessHours={['00:00:00', '23:59:59']}
                 mode="static"
-                labels={{resources: ''}}
+                labels={{ resources: '' }}
                 styles={{
                     resourcesDayView: {
                         '--resources-day-view-resource-label-width': `${resourceLabelWidth}px`,
@@ -115,60 +126,70 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
                             alt={String(resource.label)}
                         />
                         <div className="scheduler__channel-info">
-                            <span className="scheduler__channel-name">{resource.label}</span>
-                            <span
-                                className="scheduler__channel-capacity">{String(resource.payload?.capacity)} мест</span>
+                            <span className="scheduler__channel-name">
+                                {resource.label}
+                            </span>
+                            <span className="scheduler__channel-capacity">
+                                {String(resource.payload?.capacity)} мест
+                            </span>
                         </div>
                     </div>
                 )}
-                renderEvent={(event, {...eventProps}) => (
+                renderEvent={(event, { ...eventProps }) => (
                     <HoverCard
                         width={280}
                         position="bottom"
                         closeDelay={0}
-                        transitionProps={{duration: 0}}
+                        transitionProps={{ duration: 0 }}
                     >
                         <HoverCard.Target>
                             <UnstyledButton
                                 {...eventProps}
                                 className="scheduler__event"
-                                data-own={event.payload?.isOwn === true || undefined}
+                                data-own={
+                                    event.payload?.isOwn === true || undefined
+                                }
                                 onClick={() => {
                                     if (event.payload?.booking) {
                                         onEventClick?.(event.payload.booking);
                                     }
                                 }}
                             >
-                                <span className="scheduler__event-title">{event.title}</span>
+                                <span className="scheduler__event-title">
+                                    {event.title}
+                                </span>
                                 <span className="scheduler__event-time">
-                  {dayjs(event.start).format('HH:mm')} - {dayjs(event.end).format('HH:mm')}
-                </span>
+                                    {dayjs(event.start).format('HH:mm')} -{' '}
+                                    {dayjs(event.end).format('HH:mm')}
+                                </span>
                             </UnstyledButton>
                         </HoverCard.Target>
                         <HoverCard.Dropdown>
                             <div className="scheduler__event-card">
-                                <span className="scheduler__event-card-title">{event.title}</span>
+                                <span className="scheduler__event-card-title">
+                                    {event.title}
+                                </span>
                                 <span className="scheduler__event-card-time">
-                  {dayjs(event.start).format('DD.MM.YYYY, HH:mm')} -{' '}
-                                    {dayjs(event.end).format('HH:mm')}
-                </span>
+                                    {dayjs(event.start).format(
+                                        'DD.MM.YYYY, HH:mm',
+                                    )}{' '}
+                                    - {dayjs(event.end).format('HH:mm')}
+                                </span>
                                 <span className="scheduler__event-card-description">
-                  {event.payload?.booking?.description}
-                </span>
+                                    {event.payload?.booking?.description}
+                                </span>
                             </div>
                         </HoverCard.Dropdown>
                     </HoverCard>
                 )}
             />
             <div className="scheduler__legend">
-                <Badge
-                    color="blue"
-                    variant="light"
-                >Ваша бронь</Badge>
-                <Badge
-                    color="orange"
-                    variant="light"
-                >Забронировано</Badge>
+                <Badge color="blue" variant="light">
+                    Ваша бронь
+                </Badge>
+                <Badge color="orange" variant="light">
+                    Забронировано
+                </Badge>
             </div>
         </div>
     );

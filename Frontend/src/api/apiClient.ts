@@ -1,6 +1,12 @@
-import {ApiError} from "@/api/apiError";
-import {getAccessToken, getRefreshToken, setTokens, clearTokens, isRememberedSession} from "@/api/tokenStorage";
-import {notifications} from "@mantine/notifications";
+import { ApiError } from '@/api/apiError';
+import {
+    getAccessToken,
+    getRefreshToken,
+    setTokens,
+    clearTokens,
+    isRememberedSession,
+} from '@/api/tokenStorage';
+import { notifications } from '@mantine/notifications';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -25,8 +31,8 @@ async function refreshAccessToken(): Promise<string | null> {
 
             const res = await fetch(`${API_URL}/auth/refresh`, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({refreshToken}),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refreshToken }),
             });
 
             if (!res.ok) {
@@ -45,15 +51,20 @@ async function refreshAccessToken(): Promise<string | null> {
     return refreshPromise;
 }
 
-async function sendRequest(path: string, options: ApiRequestOptions = {}): Promise<Response> {
-    const {body, ...rest} = options;
+async function sendRequest(
+    path: string,
+    options: ApiRequestOptions = {},
+): Promise<Response> {
+    const { body, ...rest } = options;
     const accessToken = getAccessToken();
 
     return fetch(`${API_URL}${path}`, {
         ...rest,
         headers: {
-            ...(accessToken ? {'Authorization': `Bearer ${accessToken}`} : {}),
-            ...(body !== undefined && !(body instanceof FormData) ? {'Content-Type': 'application/json'} : {}),
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            ...(body !== undefined && !(body instanceof FormData)
+                ? { 'Content-Type': 'application/json' }
+                : {}),
             ...(rest.headers as Record<string, string> | undefined),
         },
         body:
@@ -63,7 +74,10 @@ async function sendRequest(path: string, options: ApiRequestOptions = {}): Promi
     });
 }
 
-export async function apiRequest<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
+export async function apiRequest<T>(
+    path: string,
+    options: ApiRequestOptions = {},
+): Promise<T> {
     let response = await sendRequest(path, options);
 
     if (response.status === 401) {
@@ -89,8 +103,11 @@ export async function apiRequest<T>(path: string, options: ApiRequestOptions = {
                 detail = parsed.detail;
             }
         } catch {
-            notifications.show({color: 'red', message: 'Ответ от сервера содержит ошибку'});
-            throw new ApiError(response.status, text, "Body is not json");
+            notifications.show({
+                color: 'red',
+                message: 'Ответ от сервера содержит ошибку',
+            });
+            throw new ApiError(response.status, text, 'Body is not json');
         }
         console.error(`[API ${response.status}] ${detail || text}`);
         throw new ApiError(response.status, detail || text, detail);

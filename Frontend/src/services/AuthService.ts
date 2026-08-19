@@ -1,7 +1,7 @@
-import {apiRequest} from '@/api/apiClient';
-import {AuthRegisterRequest} from "@/models/AuthRegisterRequest";
-import {AuthLoginRequest} from "@/models/AuthLoginRequest";
-import {AuthResponse} from "@/models/AuthResponse";
+import { apiRequest } from '@/api/apiClient';
+import { AuthRegisterRequest } from '@/models/AuthRegisterRequest';
+import { AuthLoginRequest } from '@/models/AuthLoginRequest';
+import { AuthResponse } from '@/models/AuthResponse';
 
 export async function register(data: AuthRegisterRequest): Promise<void> {
     await apiRequest('/auth/register', {

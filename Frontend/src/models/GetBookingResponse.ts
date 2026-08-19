@@ -1,4 +1,4 @@
-﻿import {BookingRoom} from "@/models/BookingRoom";
+﻿import { BookingRoom } from '@/models/BookingRoom';
 
 export interface GetBookingResponse {
     id: string;

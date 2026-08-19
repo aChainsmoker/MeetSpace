@@ -1,8 +1,8 @@
-import {combineReducers} from 'redux';
-import userReducer, {UserState} from './userReducer';
-import roomsReducer, {RoomsState} from './roomsReducer';
-import bookingsReducer, {BookingsState} from './bookingsReducer';
-import equipmentReducer, {EquipmentState} from './equipmentReducer';
+import { combineReducers } from 'redux';
+import userReducer, { UserState } from './userReducer';
+import roomsReducer, { RoomsState } from './roomsReducer';
+import bookingsReducer, { BookingsState } from './bookingsReducer';
+import equipmentReducer, { EquipmentState } from './equipmentReducer';
 
 export interface RootState {
     user: UserState;

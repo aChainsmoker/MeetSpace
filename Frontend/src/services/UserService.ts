@@ -1,24 +1,30 @@
-import {apiRequest} from '@/api/apiClient';
-import {GetUserResponse} from "@/models/GetUserResponse";
-import {UpdateUserRequest} from "@/models/UpdateUserRequest";
-import {GetProfileImageResponse} from "@/models/GetProfileImageResponse";
+import { apiRequest } from '@/api/apiClient';
+import { GetUserResponse } from '@/models/GetUserResponse';
+import { UpdateUserRequest } from '@/models/UpdateUserRequest';
+import { GetProfileImageResponse } from '@/models/GetProfileImageResponse';
 
-export async function getUserProfile(suppressUnauthorizedRedirect: boolean = false): Promise<GetUserResponse> {
+export async function getUserProfile(
+    suppressUnauthorizedRedirect: boolean = false,
+): Promise<GetUserResponse> {
     return apiRequest<GetUserResponse>('/users/me', {
-        suppressUnauthorizedHandler: suppressUnauthorizedRedirect
+        suppressUnauthorizedHandler: suppressUnauthorizedRedirect,
     });
 }
 
-export async function updateUserProfile(request: UpdateUserRequest): Promise<void> {
+export async function updateUserProfile(
+    request: UpdateUserRequest,
+): Promise<void> {
     await apiRequest('/users/me', {
         method: 'PUT',
         body: request,
     });
 }
 
-export async function getProfileImage(imageKey: string): Promise<GetProfileImageResponse> {
+export async function getProfileImage(
+    imageKey: string,
+): Promise<GetProfileImageResponse> {
     return apiRequest<GetProfileImageResponse>(
-        `/users/me/photo?imageKey=${encodeURIComponent(imageKey)}`
+        `/users/me/photo?imageKey=${encodeURIComponent(imageKey)}`,
     );
 }
 

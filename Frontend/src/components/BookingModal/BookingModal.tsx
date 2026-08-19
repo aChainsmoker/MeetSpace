@@ -1,16 +1,24 @@
-import {useEffect, useMemo, useState} from 'react';
-import {Button, Group, Modal, Select, Stack, Textarea, TextInput} from '@mantine/core';
-import {useForm} from '@mantine/form';
-import {notifications} from '@mantine/notifications';
-import {DatePickerInput} from '@mantine/dates';
-import {CalendarDotIcon} from '@phosphor-icons/react';
+import { useEffect, useMemo, useState } from 'react';
+import {
+    Button,
+    Group,
+    Modal,
+    Select,
+    Stack,
+    Textarea,
+    TextInput,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { DatePickerInput } from '@mantine/dates';
+import { CalendarDotIcon } from '@phosphor-icons/react';
 import TimePicker from '@/components/TimePicker/TimePicker';
 import '@/components/BookingModal/BookingModal.css';
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {CreateBookingRequest} from "@/models/CreateBookingRequest";
-import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
-import {GetRoomResponse} from "@/models/GetRoomResponse";
-import {ApiError} from "@/api/apiError";
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { CreateBookingRequest } from '@/models/CreateBookingRequest';
+import { UpdateBookingRequest } from '@/models/UpdateBookingRequest';
+import { GetRoomResponse } from '@/models/GetRoomResponse';
+import { ApiError } from '@/api/apiError';
 
 interface BookingModalProps {
     opened: boolean;
@@ -35,7 +43,19 @@ interface BookingFormValues {
     description: string;
 }
 
-export default function BookingModal({opened, isEditing, booking, initialRoomId, onClose, onSaved, rooms, userId, onFetchRooms, onCreate, onUpdate,}: BookingModalProps) {
+export default function BookingModal({
+    opened,
+    isEditing,
+    booking,
+    initialRoomId,
+    onClose,
+    onSaved,
+    rooms,
+    userId,
+    onFetchRooms,
+    onCreate,
+    onUpdate,
+}: BookingModalProps) {
     const [submitting, setSubmitting] = useState(false);
 
     const form = useForm<BookingFormValues>({
@@ -52,7 +72,10 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
             date: (value) => (value ? null : 'Выберите дату'),
             startTime: (value, values) => {
                 if (!value) return 'Укажите время начала';
-                if (values.date && new Date(`${values.date}T${value}`).getTime() < Date.now()) {
+                if (
+                    values.date &&
+                    new Date(`${values.date}T${value}`).getTime() < Date.now()
+                ) {
                     return 'Время начала не может быть в прошлом';
                 }
                 return null;
@@ -62,25 +85,29 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
                 if (values.startTime && value <= values.startTime) {
                     return 'Время окончания должно быть позже времени начала';
                 }
-                if (values.date && new Date(`${values.date}T${value}`).getTime() < Date.now()) {
+                if (
+                    values.date &&
+                    new Date(`${values.date}T${value}`).getTime() < Date.now()
+                ) {
                     return 'Время окончания не может быть в прошлом';
                 }
                 return null;
             },
-            title: (value) => (value.trim() ? null : 'Введите название встречи'),
+            title: (value) =>
+                value.trim() ? null : 'Введите название встречи',
         },
     });
 
     useEffect(() => {
-        if(!opened) {
+        if (!opened) {
             form.reset();
             return;
         }
     }, [opened]);
 
     const roomOptions = useMemo(
-        () => rooms.map((room) => ({value: room.id, label: room.name})),
-        [rooms]
+        () => rooms.map((room) => ({ value: room.id, label: room.name })),
+        [rooms],
     );
 
     useEffect(() => {
@@ -138,14 +165,15 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
             onClose();
         } catch (error) {
             const isRoomTaken =
-                error instanceof ApiError && error.detail?.toLowerCase().includes('already taken');
+                error instanceof ApiError &&
+                error.detail?.toLowerCase().includes('already taken');
             notifications.show({
                 color: 'red',
                 message: isRoomTaken
                     ? 'Данная переговорная уже занята в это время. Пожалуйста, выберите другое время.'
                     : isEditing
-                        ? 'Произошла ошибка при обновлении бронирования'
-                        : 'Произошла ошибка при создании бронирования',
+                      ? 'Произошла ошибка при обновлении бронирования'
+                      : 'Произошла ошибка при создании бронирования',
             });
         } finally {
             setSubmitting(false);
@@ -156,7 +184,9 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
         <Modal
             opened={opened}
             onClose={onClose}
-            title={isEditing ? 'Редактирование бронирования' : 'Новое бронирование'}
+            title={
+                isEditing ? 'Редактирование бронирования' : 'Новое бронирование'
+            }
             centered
             size="lg"
         >
@@ -173,7 +203,7 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
                     <DatePickerInput
                         label="Дата"
                         placeholder="Выберите дату"
-                        rightSection={<CalendarDotIcon size={18}/>}
+                        rightSection={<CalendarDotIcon size={18} />}
                         rightSectionPointerEvents="none"
                         minDate={new Date()}
                         valueFormat="DD.MM.YYYY"
@@ -201,10 +231,7 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
                         minRows={3}
                         {...form.getInputProps('description')}
                     />
-                    <Group
-                        justify="flex-end"
-                        mt="md"
-                    >
+                    <Group justify="flex-end" mt="md">
                         <Button
                             variant="default"
                             onClick={onClose}

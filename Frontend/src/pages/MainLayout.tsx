@@ -1,19 +1,22 @@
-import {useCallback, useEffect} from 'react';
-import {Outlet, useLocation, useNavigate} from 'react-router';
-import {Avatar, Button, Text, Title, UnstyledButton} from '@mantine/core';
-import {notifications} from '@mantine/notifications';
-import {useDisclosure} from '@mantine/hooks';
+import { useCallback, useEffect } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+import { Avatar, Button, Text, Title, UnstyledButton } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useDisclosure } from '@mantine/hooks';
 import Navbar from '@/components/Navbar/Navbar';
 import BottomNav from '@/components/BottomNav/BottomNav';
 import BookingModal from '@/components/BookingModal/BookingModal';
-import {useAppDispatch, useAppSelector} from '@/store/hooks';
-import {fetchUserAsync, logoutAsync} from '@/store/actions/userActions';
-import {fetchRoomsAsync} from '@/store/actions/roomsActions';
-import {createBookingAsync, updateBookingAsync} from '@/store/actions/bookingsActions';
-import "@/pages/MainLayout.css"
-import {PlusIcon} from "@phosphor-icons/react";
-import {CreateBookingRequest} from "@/models/CreateBookingRequest";
-import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchUserAsync, logoutAsync } from '@/store/actions/userActions';
+import { fetchRoomsAsync } from '@/store/actions/roomsActions';
+import {
+    createBookingAsync,
+    updateBookingAsync,
+} from '@/store/actions/bookingsActions';
+import '@/pages/MainLayout.css';
+import { PlusIcon } from '@phosphor-icons/react';
+import { CreateBookingRequest } from '@/models/CreateBookingRequest';
+import { UpdateBookingRequest } from '@/models/UpdateBookingRequest';
 
 export default function MainLayout() {
     const location = useLocation();
@@ -23,18 +26,23 @@ export default function MainLayout() {
     const imageUrl = useAppSelector((state) => state.user.imageUrl);
     const rooms = useAppSelector((state) => state.rooms.rooms);
     const userId = user?.id ?? null;
-    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
+    const [
+        bookingModalOpened,
+        { open: handleOpeningModal, close: handleClosingModal },
+    ] = useDisclosure(false);
 
     useEffect(() => {
-        dispatch(fetchUserAsync(true)).catch(() => {
-        });
+        dispatch(fetchUserAsync(true)).catch(() => {});
     }, [dispatch]);
 
     const handleLogout = useCallback(async () => {
         try {
             await dispatch(logoutAsync());
         } catch {
-            notifications.show({color: 'red', message: 'Произошла ошибка при выходе из аккаунта'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при выходе из аккаунта',
+            });
         } finally {
             navigate('/authentication');
         }
@@ -42,7 +50,10 @@ export default function MainLayout() {
 
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
-            notifications.show({color: 'red', message: 'Произошла ошибка при загрузке комнат'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при загрузке комнат',
+            });
         });
     }, [dispatch]);
 
@@ -50,14 +61,14 @@ export default function MainLayout() {
         async (request: CreateBookingRequest) => {
             await dispatch(createBookingAsync(request));
         },
-        [dispatch]
+        [dispatch],
     );
 
     const handleUpdateBooking = useCallback(
         async (id: string, request: UpdateBookingRequest) => {
             await dispatch(updateBookingAsync(id, request));
         },
-        [dispatch]
+        [dispatch],
     );
 
     return (
@@ -70,21 +81,16 @@ export default function MainLayout() {
                 isAuthenticated={!!user}
                 onLogin={() => navigate('/authentication')}
             />
-            <BottomNav/>
+            <BottomNav />
             <div className="main-layout__content">
                 {location.pathname === '/' && (
                     <div className="main-layout__header">
                         <div>
-                            <Title
-                                className="main-layout__greeting"
-                                order={2}
-                            >
-                                Доброго времени суток, {user?.firstName ?? 'Гость'}!
+                            <Title className="main-layout__greeting" order={2}>
+                                Доброго времени суток,{' '}
+                                {user?.firstName ?? 'Гость'}!
                             </Title>
-                            <Text
-                                c="dimmed"
-                                mt={4}
-                            >
+                            <Text c="dimmed" mt={4}>
                                 Найдите и забронируйте переговорную комнату
                             </Text>
                         </div>
@@ -116,7 +122,7 @@ export default function MainLayout() {
                     </div>
                 )}
                 <main>
-                    <Outlet/>
+                    <Outlet />
                 </main>
             </div>
             <BookingModal

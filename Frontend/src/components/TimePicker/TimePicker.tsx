@@ -1,4 +1,4 @@
-import {TimePicker as MantineTimePicker} from '@mantine/dates';
+import { TimePicker as MantineTimePicker } from '@mantine/dates';
 import '@/components/TimePicker/TimePicker.css';
 
 interface TimePickerProps {
@@ -8,7 +8,12 @@ interface TimePickerProps {
     onChange: (value: string) => void;
 }
 
-export default function TimePicker({label, value, error, onChange}: TimePickerProps) {
+export default function TimePicker({
+    label,
+    value,
+    error,
+    onChange,
+}: TimePickerProps) {
     return (
         <MantineTimePicker
             withDropdown

@@ -1,21 +1,25 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import {Button, Loader} from '@mantine/core';
-import {useElementSize} from '@mantine/hooks';
-import {notifications} from '@mantine/notifications';
-import {DayView, MonthView, ScheduleEventData} from '@mantine/schedule';
-import {useAppDispatch, useAppSelector} from '@/store/hooks';
-import {fetchBookingsByDateRangeAsync} from '@/store/actions/bookingsActions';
+import { Button, Loader } from '@mantine/core';
+import { useElementSize } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { DayView, MonthView, ScheduleEventData } from '@mantine/schedule';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchBookingsByDateRangeAsync } from '@/store/actions/bookingsActions';
 import '@/pages/CalendarPage.css';
-import {GetBookingResponse} from "@/models/GetBookingResponse";
+import { GetBookingResponse } from '@/models/GetBookingResponse';
 
 const START_TIME = '09:00:00';
 const END_TIME = '18:00:00';
 const INTERVAL_MINUTES = 15;
-const HOURS = parseInt(END_TIME.slice(0, 2), 10) - parseInt(START_TIME.slice(0, 2), 10);
+const HOURS =
+    parseInt(END_TIME.slice(0, 2), 10) - parseInt(START_TIME.slice(0, 2), 10);
 const SLOT_BORDER_ALLOWANCE = HOURS * (60 / INTERVAL_MINUTES);
 
-function toEvent(booking: GetBookingResponse, currentUserId: string | null): ScheduleEventData {
+function toEvent(
+    booking: GetBookingResponse,
+    currentUserId: string | null,
+): ScheduleEventData {
     return {
         id: booking.id,
         title: booking.title,
@@ -29,19 +33,24 @@ export default function CalendarPage() {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user.user);
     const currentUserId = user?.id ?? null;
-    const dateRangeBookings = useAppSelector((state) => state.bookings.dateRangeBookings);
+    const dateRangeBookings = useAppSelector(
+        (state) => state.bookings.dateRangeBookings,
+    );
     const isLoading = useAppSelector((state) => state.bookings.isLoading);
     const [view, setView] = useState<'month' | 'day'>('month');
     const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [selectedDay, setSelectedDay] = useState<string | null>(null);
-    const {ref: dayRef, height: dayHeight} = useElementSize();
+    const { ref: dayRef, height: dayHeight } = useElementSize();
 
     useEffect(() => {
         const start = dayjs(date).startOf('month').format('YYYY-MM-DD');
         const end = dayjs(date).endOf('month').format('YYYY-MM-DD');
 
         dispatch(fetchBookingsByDateRangeAsync(start, end)).catch(() => {
-            notifications.show({color: 'red', message: 'Произошла ошибка при загрузке бронирований'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при загрузке бронирований',
+            });
         });
     }, [date, dispatch]);
 
@@ -57,7 +66,7 @@ export default function CalendarPage() {
 
     const monthEvents = useMemo(
         () => dateRangeBookings.map((b) => toEvent(b, currentUserId)),
-        [dateRangeBookings, currentUserId]
+        [dateRangeBookings, currentUserId],
     );
 
     const dayEvents = useMemo(
@@ -65,24 +74,25 @@ export default function CalendarPage() {
             dateRangeBookings
                 .filter((b) => b.bookingDate === selectedDay)
                 .map((b) => toEvent(b, currentUserId)),
-        [dateRangeBookings, selectedDay, currentUserId]
+        [dateRangeBookings, selectedDay, currentUserId],
     );
 
     const slotHeight = useMemo(
-        () => Math.max(Math.floor((dayHeight - SLOT_BORDER_ALLOWANCE) / HOURS), 70),
-        [dayHeight]
+        () =>
+            Math.max(
+                Math.floor((dayHeight - SLOT_BORDER_ALLOWANCE) / HOURS),
+                70,
+            ),
+        [dayHeight],
     );
 
     if (view === 'day' && selectedDay) {
         return (
             <div className="calendar-page calendar-page--day">
-                <div
-                    className="calendar-page__day"
-                    ref={dayRef}
-                >
+                <div className="calendar-page__day" ref={dayRef}>
                     {isLoading ? (
                         <div className="calendar-page__loader">
-                            <Loader/>
+                            <Loader />
                         </div>
                     ) : (
                         <DayView
@@ -95,14 +105,21 @@ export default function CalendarPage() {
                             endTime={END_TIME}
                             withHeader={false}
                             mode="static"
-                            classNames={{event: 'calendar-page__schedule-event'}}
-                            scrollAreaProps={{mah: dayHeight || undefined}}
+                            classNames={{
+                                event: 'calendar-page__schedule-event',
+                            }}
+                            scrollAreaProps={{ mah: dayHeight || undefined }}
                             renderEventBody={(event) => (
-                                <div className={`calendar-page__event calendar-page__event--${event.color}`}>
-                                    <span className="calendar-page__event-title">{event.title}</span>
+                                <div
+                                    className={`calendar-page__event calendar-page__event--${event.color}`}
+                                >
+                                    <span className="calendar-page__event-title">
+                                        {event.title}
+                                    </span>
                                     <span className="calendar-page__event-time">
-                    {dayjs(event.start).format('HH:mm')} - {dayjs(event.end).format('HH:mm')}
-                  </span>
+                                        {dayjs(event.start).format('HH:mm')} -{' '}
+                                        {dayjs(event.end).format('HH:mm')}
+                                    </span>
                                 </div>
                             )}
                         />

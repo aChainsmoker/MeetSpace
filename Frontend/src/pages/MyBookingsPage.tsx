@@ -1,36 +1,43 @@
-import {useCallback, useEffect, useState} from 'react';
-import {Button, Tabs, Text} from '@mantine/core';
-import {useDisclosure, useMediaQuery} from '@mantine/hooks';
-import {notifications} from '@mantine/notifications';
-import {PlusIcon} from '@phosphor-icons/react';
+import { useCallback, useEffect, useState } from 'react';
+import { Button, Tabs, Text } from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { PlusIcon } from '@phosphor-icons/react';
 import BookingRow from '@/components/BookingRow/BookingRow';
 import BookingModal from '@/components/BookingModal/BookingModal';
 import FloatingActionButton from '@/components/FloatingActionButton/FloatingActionButton';
-import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
     createBookingAsync,
     deleteBookingAsync,
     fetchUserBookingsAsync,
-    updateBookingAsync
+    updateBookingAsync,
 } from '@/store/actions/bookingsActions';
-import {fetchRoomsAsync} from '@/store/actions/roomsActions';
+import { fetchRoomsAsync } from '@/store/actions/roomsActions';
 import '@/pages/MyBookingsPage.css';
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {CreateBookingRequest} from "@/models/CreateBookingRequest";
-import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { CreateBookingRequest } from '@/models/CreateBookingRequest';
+import { UpdateBookingRequest } from '@/models/UpdateBookingRequest';
 
 export default function MyBookingsPage() {
     const dispatch = useAppDispatch();
     const bookings = useAppSelector((state) => state.bookings.userBookings);
     const rooms = useAppSelector((state) => state.rooms.rooms);
     const userId = useAppSelector((state) => state.user.user?.id ?? null);
-    const [editingBooking, setEditingBooking] = useState<GetBookingResponse | null>(null);
-    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
+    const [editingBooking, setEditingBooking] =
+        useState<GetBookingResponse | null>(null);
+    const [
+        bookingModalOpened,
+        { open: handleOpeningModal, close: handleClosingModal },
+    ] = useDisclosure(false);
     const isMobile = useMediaQuery('(max-width: 62em)');
 
     const loadBookings = useCallback(() => {
         dispatch(fetchUserBookingsAsync()).catch(() => {
-            notifications.show({color: 'red', message: 'Произошла ошибка при загрузке ваших бронирований'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при загрузке ваших бронирований',
+            });
         });
     }, [dispatch]);
 
@@ -40,10 +47,12 @@ export default function MyBookingsPage() {
 
     const [now] = useState(() => Date.now());
     const upcoming = bookings.filter(
-        (b) => new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now
+        (b) =>
+            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now,
     );
     const past = bookings.filter(
-        (b) => new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() <= now
+        (b) =>
+            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() <= now,
     );
 
     const handleCreate = useCallback(() => {
@@ -51,26 +60,42 @@ export default function MyBookingsPage() {
         handleOpeningModal();
     }, [handleOpeningModal]);
 
-    const handleEdit = useCallback((booking: GetBookingResponse) => {
-        setEditingBooking(booking);
-        handleOpeningModal();
-        }, [handleOpeningModal]);
+    const handleEdit = useCallback(
+        (booking: GetBookingResponse) => {
+            setEditingBooking(booking);
+            handleOpeningModal();
+        },
+        [handleOpeningModal],
+    );
 
-    const handleDelete = useCallback((booking: GetBookingResponse) => {
-        dispatch(deleteBookingAsync(booking.id))
-            .then(() =>
-                dispatch(fetchUserBookingsAsync()).catch(() => {
-                    notifications.show({color: 'red', message: 'Произошла ошибка при загрузке ваших бронирований'});
-                })
-            )
-            .catch(() => {
-                notifications.show({color: 'red', message: 'Произошла ошибка при удалении бронирования'});
-            });
-    }, [dispatch]);
+    const handleDelete = useCallback(
+        (booking: GetBookingResponse) => {
+            dispatch(deleteBookingAsync(booking.id))
+                .then(() =>
+                    dispatch(fetchUserBookingsAsync()).catch(() => {
+                        notifications.show({
+                            color: 'red',
+                            message:
+                                'Произошла ошибка при загрузке ваших бронирований',
+                        });
+                    }),
+                )
+                .catch(() => {
+                    notifications.show({
+                        color: 'red',
+                        message: 'Произошла ошибка при удалении бронирования',
+                    });
+                });
+        },
+        [dispatch],
+    );
 
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
-            notifications.show({color: 'red', message: 'Произошла ошибка при загрузке комнат'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при загрузке комнат',
+            });
         });
     }, [dispatch]);
 
@@ -78,20 +103,26 @@ export default function MyBookingsPage() {
         async (request: CreateBookingRequest) => {
             await dispatch(createBookingAsync(request));
             dispatch(fetchUserBookingsAsync()).catch(() => {
-                notifications.show({color: 'red', message: 'Произошла ошибка при загрузке ваших бронирований'});
+                notifications.show({
+                    color: 'red',
+                    message: 'Произошла ошибка при загрузке ваших бронирований',
+                });
             });
         },
-        [dispatch]
+        [dispatch],
     );
 
     const handleUpdateBooking = useCallback(
         async (id: string, request: UpdateBookingRequest) => {
             await dispatch(updateBookingAsync(id, request));
             dispatch(fetchUserBookingsAsync()).catch(() => {
-                notifications.show({color: 'red', message: 'Произошла ошибка при загрузке ваших бронирований'});
+                notifications.show({
+                    color: 'red',
+                    message: 'Произошла ошибка при загрузке ваших бронирований',
+                });
             });
         },
-        [dispatch]
+        [dispatch],
     );
 
     const renderList = (items: GetBookingResponse[]) =>
@@ -117,16 +148,10 @@ export default function MyBookingsPage() {
                     <Tabs.Tab value="upcoming">Предстоящие</Tabs.Tab>
                     <Tabs.Tab value="past">Прошедшие</Tabs.Tab>
                 </Tabs.List>
-                <Tabs.Panel
-                    value="upcoming"
-                    pt="md"
-                >
+                <Tabs.Panel value="upcoming" pt="md">
                     {renderList(upcoming)}
                 </Tabs.Panel>
-                <Tabs.Panel
-                    value="past"
-                    pt="md"
-                >
+                <Tabs.Panel value="past" pt="md">
                     {renderList(past)}
                 </Tabs.Panel>
             </Tabs>
@@ -143,7 +168,7 @@ export default function MyBookingsPage() {
                 />
                 Новая бронь
             </Button>
-            <FloatingActionButton onClick={handleCreate}/>
+            <FloatingActionButton onClick={handleCreate} />
             <BookingModal
                 opened={bookingModalOpened}
                 isEditing={editingBooking !== null}

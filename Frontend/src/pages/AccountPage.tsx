@@ -1,10 +1,10 @@
-import {useCallback} from 'react';
-import {useNavigate} from 'react-router';
-import {Button} from '@mantine/core';
-import {notifications} from '@mantine/notifications';
-import {GearIcon, SignOutIcon} from '@phosphor-icons/react';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router';
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { GearIcon, SignOutIcon } from '@phosphor-icons/react';
 import ProfileForm from '@/components/ProfileForm/ProfileForm';
-import {useAppDispatch, useAppSelector} from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
     fetchUserAsync,
     logoutAsync,
@@ -12,7 +12,7 @@ import {
     updateUserProfileImageAsync,
 } from '@/store/actions/userActions';
 import '@/pages/AccountPage.css';
-import {UpdateUserRequest} from "@/models/UpdateUserRequest";
+import { UpdateUserRequest } from '@/models/UpdateUserRequest';
 
 export default function AccountPage() {
     const dispatch = useAppDispatch();
@@ -28,14 +28,17 @@ export default function AccountPage() {
             }
             await dispatch(fetchUserAsync());
         },
-        [dispatch]
+        [dispatch],
     );
 
     const handleLogout = useCallback(async () => {
         try {
             await dispatch(logoutAsync());
         } catch {
-            notifications.show({color: 'red', message: 'Произошла ошибка при выходе из аккаунта'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при выходе из аккаунта',
+            });
         } finally {
             navigate('/authentication');
         }
@@ -48,7 +51,7 @@ export default function AccountPage() {
                     className="account-page__settings"
                     variant="transparent"
                     color="gray"
-                    leftSection={<GearIcon size={18}/>}
+                    leftSection={<GearIcon size={18} />}
                     onClick={() => navigate('/settings')}
                 >
                     Настройки
@@ -62,11 +65,12 @@ export default function AccountPage() {
                     className="account-page__logout"
                     color="var(--button-danger)"
                     size="lg"
-                    leftSection={<SignOutIcon size={18}/>}
+                    leftSection={<SignOutIcon size={18} />}
                     onClick={handleLogout}
                 >
                     Выйти
                 </Button>
             </div>
-        </div>);
+        </div>
+    );
 }

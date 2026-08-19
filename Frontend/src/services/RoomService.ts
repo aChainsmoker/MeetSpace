@@ -1,5 +1,5 @@
-import {apiRequest} from '@/api/apiClient';
-import {GetRoomResponse} from "@/models/GetRoomResponse";
+import { apiRequest } from '@/api/apiClient';
+import { GetRoomResponse } from '@/models/GetRoomResponse';
 
 export async function getRooms(): Promise<GetRoomResponse[]> {
     return apiRequest<GetRoomResponse[]>('/rooms');

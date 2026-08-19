@@ -1,7 +1,7 @@
-import {GetUserResponse} from "@/models/GetUserResponse";
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {RoomEquipment} from "@/models/RoomEquipment";
-import {GetRoomResponse} from "@/models/GetRoomResponse";
+import { GetUserResponse } from '@/models/GetUserResponse';
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { RoomEquipment } from '@/models/RoomEquipment';
+import { GetRoomResponse } from '@/models/GetRoomResponse';
 
 export const USER_FETCH_LOAD = 'user/userLoading';
 export const USER_FETCH = 'user/userFetched';
@@ -32,9 +32,9 @@ export type RoomsAction =
     | { type: typeof ROOMS_FETCH; payload: GetRoomResponse[] }
     | { type: typeof ROOMS_FETCH_DETAIL; payload: GetRoomResponse }
     | {
-    type: typeof ROOMS_FETCH_ROOM_BOOKINGS;
-    payload: { roomId: string; bookings: GetBookingResponse[] };
-};
+          type: typeof ROOMS_FETCH_ROOM_BOOKINGS;
+          payload: { roomId: string; bookings: GetBookingResponse[] };
+      };
 
 export type BookingsAction =
     | { type: typeof BOOKINGS_FETCH_LOAD }
@@ -46,4 +46,5 @@ export type EquipmentAction =
     | { type: typeof EQUIPMENT_FETCH_LOAD }
     | { type: typeof EQUIPMENT_FETCH; payload: RoomEquipment[] };
 
-export type RootAction = UserAction | RoomsAction | BookingsAction | EquipmentAction;
+export type RootAction =
+    UserAction | RoomsAction | BookingsAction | EquipmentAction;

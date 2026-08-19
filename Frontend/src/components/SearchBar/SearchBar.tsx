@@ -1,13 +1,13 @@
-import {useState} from 'react';
-import {TextInput} from '@mantine/core';
-import {MagnifyingGlassIcon} from '@phosphor-icons/react';
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
 interface SearchBarProps {
     value?: string;
     onSubmit: (value: string) => void;
 }
 
-export default function SearchBar({value, onSubmit}: SearchBarProps) {
+export default function SearchBar({ value, onSubmit }: SearchBarProps) {
     const [draft, setDraft] = useState(value ?? '');
 
     return (
@@ -21,7 +21,7 @@ export default function SearchBar({value, onSubmit}: SearchBarProps) {
                     onSubmit(draft);
                 }
             }}
-            rightSection={<MagnifyingGlassIcon size={18}/>}
+            rightSection={<MagnifyingGlassIcon size={18} />}
             rightSectionPointerEvents="none"
             size="lg"
         />

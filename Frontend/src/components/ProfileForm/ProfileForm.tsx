@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
-import {Button, Image, Paper, Stack, Text, TextInput} from '@mantine/core';
-import {useForm} from '@mantine/form';
-import {notifications} from '@mantine/notifications';
-import {Dropzone, FileWithPath, IMAGE_MIME_TYPE} from '@mantine/dropzone';
-import {UploadSimpleIcon} from '@phosphor-icons/react';
+import { useEffect, useState } from 'react';
+import { Button, Image, Paper, Stack, Text, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { UploadSimpleIcon } from '@phosphor-icons/react';
 import '@/components/ProfileForm/ProfileForm.css';
-import {GetUserResponse} from "@/models/GetUserResponse";
-import {UpdateUserRequest} from "@/models/UpdateUserRequest";
+import { GetUserResponse } from '@/models/GetUserResponse';
+import { UpdateUserRequest } from '@/models/UpdateUserRequest';
 
 interface ProfileFormProps {
     user: GetUserResponse | null;
@@ -20,7 +20,11 @@ interface ProfileFormValues {
     email: string;
 }
 
-export default function ProfileForm({user, imageUrl, onSave}: ProfileFormProps) {
+export default function ProfileForm({
+    user,
+    imageUrl,
+    onSave,
+}: ProfileFormProps) {
     const [newFile, setNewFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [success, setSuccess] = useState('');
@@ -35,7 +39,8 @@ export default function ProfileForm({user, imageUrl, onSave}: ProfileFormProps) 
         validate: {
             firstName: (value) => (value.trim() ? null : 'Введите имя'),
             lastName: (value) => (value.trim() ? null : 'Введите фамилию'),
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Введите корректный email'),
+            email: (value) =>
+                /^\S+@\S+$/.test(value) ? null : 'Введите корректный email',
         },
     });
 
@@ -71,7 +76,10 @@ export default function ProfileForm({user, imageUrl, onSave}: ProfileFormProps) 
             setPreviewUrl(null);
             setSuccess('Данные сохранены');
         } catch {
-            notifications.show({color: 'red', message: 'Произошла ошибка при сохранении профиля'});
+            notifications.show({
+                color: 'red',
+                message: 'Произошла ошибка при сохранении профиля',
+            });
         } finally {
             setSaving(false);
         }
@@ -138,7 +146,7 @@ interface DropzoneSectionProps {
     onSelect: (files: FileWithPath[]) => void;
 }
 
-function DropzoneSection({imageUrl, onSelect}: DropzoneSectionProps) {
+function DropzoneSection({ imageUrl, onSelect }: DropzoneSectionProps) {
     return (
         <Dropzone
             className="profile-form__dropzone"
@@ -147,18 +155,15 @@ function DropzoneSection({imageUrl, onSelect}: DropzoneSectionProps) {
             maxSize={5 * 1024 ** 2}
             onDrop={onSelect}
         >
-            {imageUrl ?
-                (
-                    <Image className="profile-form__avatar" src={imageUrl} alt="Profile"/>
-                )
-                :
-                (
-                    <UploadSimpleIcon
-                        size={64}
-                        color="grey"
-                    />
-                )
-            }
+            {imageUrl ? (
+                <Image
+                    className="profile-form__avatar"
+                    src={imageUrl}
+                    alt="Profile"
+                />
+            ) : (
+                <UploadSimpleIcon size={64} color="grey" />
+            )}
         </Dropzone>
     );
 }

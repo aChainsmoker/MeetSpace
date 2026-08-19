@@ -1,7 +1,7 @@
-import {useEffect} from 'react';
-import {Button, Collapse, MultiSelect} from '@mantine/core';
-import {useDisclosure} from '@mantine/hooks';
-import {CaretDownIcon, SlidersHorizontalIcon} from '@phosphor-icons/react';
+import { useEffect } from 'react';
+import { Button, Collapse, MultiSelect } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { CaretDownIcon, SlidersHorizontalIcon } from '@phosphor-icons/react';
 
 interface AmenitiesFilterProps {
     value: string[];
@@ -10,8 +10,13 @@ interface AmenitiesFilterProps {
     onFetch: () => void;
 }
 
-export default function AmenitiesFilter({value, onChange, data, onFetch}: AmenitiesFilterProps) {
-    const [expanded, {toggle}] = useDisclosure(false);
+export default function AmenitiesFilter({
+    value,
+    onChange,
+    data,
+    onFetch,
+}: AmenitiesFilterProps) {
+    const [expanded, { toggle }] = useDisclosure(false);
 
     useEffect(() => {
         onFetch();
@@ -25,10 +30,10 @@ export default function AmenitiesFilter({value, onChange, data, onFetch}: Amenit
                 fullWidth
                 variant="default"
                 size="lg"
-                rightSection={<CaretDownIcon size={14}/>}
+                rightSection={<CaretDownIcon size={14} />}
                 leftSection={
                     <span className="filter-toggle__left">
-                        <SlidersHorizontalIcon size={18}/>
+                        <SlidersHorizontalIcon size={18} />
                         Удобства
                     </span>
                 }

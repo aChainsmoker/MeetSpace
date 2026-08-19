@@ -2,11 +2,12 @@ import {
     ROOMS_FETCH,
     ROOMS_FETCH_DETAIL,
     ROOMS_FETCH_LOAD,
-    ROOMS_FETCH_ROOM_BOOKINGS, RoomsAction
+    ROOMS_FETCH_ROOM_BOOKINGS,
+    RoomsAction,
 } from '../actions/types';
 
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {GetRoomResponse} from "@/models/GetRoomResponse";
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { GetRoomResponse } from '@/models/GetRoomResponse';
 
 export interface RoomsState {
     rooms: GetRoomResponse[];
@@ -22,13 +23,16 @@ const initialState: RoomsState = {
     isLoading: false,
 };
 
-const roomsReducer = (state: RoomsState | undefined = initialState, action: RoomsAction): RoomsState => {
+const roomsReducer = (
+    state: RoomsState | undefined = initialState,
+    action: RoomsAction,
+): RoomsState => {
     switch (action.type) {
         case ROOMS_FETCH_LOAD:
-            return {...state, isLoading: true};
+            return { ...state, isLoading: true };
 
         case ROOMS_FETCH:
-            return {...state, isLoading: false, rooms: action.payload};
+            return { ...state, isLoading: false, rooms: action.payload };
 
         case ROOMS_FETCH_DETAIL:
             return {

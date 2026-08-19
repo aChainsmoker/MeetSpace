@@ -1,17 +1,21 @@
-import {apiRequest} from '@/api/apiClient';
-import {GetBookingResponse} from "@/models/GetBookingResponse";
-import {CreateBookingRequest} from "@/models/CreateBookingRequest";
-import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
-import {BookingsFilter} from "@/models/BookingsFilter";
+import { apiRequest } from '@/api/apiClient';
+import { GetBookingResponse } from '@/models/GetBookingResponse';
+import { CreateBookingRequest } from '@/models/CreateBookingRequest';
+import { UpdateBookingRequest } from '@/models/UpdateBookingRequest';
+import { BookingsFilter } from '@/models/BookingsFilter';
 
-export async function createBooking(request: CreateBookingRequest): Promise<void> {
+export async function createBooking(
+    request: CreateBookingRequest,
+): Promise<void> {
     await apiRequest('/bookings', {
         method: 'POST',
         body: request,
     });
 }
 
-export async function getBookings(filter: BookingsFilter = {}): Promise<GetBookingResponse[]> {
+export async function getBookings(
+    filter: BookingsFilter = {},
+): Promise<GetBookingResponse[]> {
     const params = new URLSearchParams();
 
     if (filter.roomSearchQuery) {
@@ -37,14 +41,23 @@ export async function getBookings(filter: BookingsFilter = {}): Promise<GetBooki
     }
 
     const query = params.toString();
-    return apiRequest<GetBookingResponse[]>(`/bookings${query ? `?${query}` : ''}`);
+    return apiRequest<GetBookingResponse[]>(
+        `/bookings${query ? `?${query}` : ''}`,
+    );
 }
 
-export async function getBookingsByDateRange(startDate: string, endDate: string): Promise<GetBookingResponse[]> {
-    return apiRequest<GetBookingResponse[]>(`/bookings?StartDate=${startDate}&EndDate=${endDate}`);
+export async function getBookingsByDateRange(
+    startDate: string,
+    endDate: string,
+): Promise<GetBookingResponse[]> {
+    return apiRequest<GetBookingResponse[]>(
+        `/bookings?StartDate=${startDate}&EndDate=${endDate}`,
+    );
 }
 
-export async function getBookingsForRoom(roomId: string): Promise<GetBookingResponse[]> {
+export async function getBookingsForRoom(
+    roomId: string,
+): Promise<GetBookingResponse[]> {
     return apiRequest<GetBookingResponse[]>(`/bookings/room/${roomId}`);
 }
 
@@ -52,7 +65,10 @@ export async function getUserBookings(): Promise<GetBookingResponse[]> {
     return apiRequest<GetBookingResponse[]>('/bookings/user');
 }
 
-export async function updateBooking(id: string, request: UpdateBookingRequest): Promise<void> {
+export async function updateBooking(
+    id: string,
+    request: UpdateBookingRequest,
+): Promise<void> {
     await apiRequest(`/bookings/${id}`, {
         method: 'PUT',
         body: request,
@@ -60,5 +76,5 @@ export async function updateBooking(id: string, request: UpdateBookingRequest): 
 }
 
 export async function deleteBooking(id: string): Promise<void> {
-    await apiRequest(`/bookings/${id}`, {method: 'DELETE'});
+    await apiRequest(`/bookings/${id}`, { method: 'DELETE' });
 }
