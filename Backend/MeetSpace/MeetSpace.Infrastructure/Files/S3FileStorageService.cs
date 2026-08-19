@@ -51,7 +51,7 @@ public class S3FileStorageService : IFileStorageService
         {
             BucketName = _settings.BucketName,
             Key = fileKey,
-            Expires = DateTime.UtcNow.Add(TimeSpan.FromSeconds(_settings.PresignedUrlExpirationMinutes)),
+            Expires = DateTime.UtcNow.Add(TimeSpan.FromMinutes(_settings.PresignedUrlExpirationMinutes)),
             Verb = HttpVerb.GET,
             Protocol = Protocol.HTTP
         };
