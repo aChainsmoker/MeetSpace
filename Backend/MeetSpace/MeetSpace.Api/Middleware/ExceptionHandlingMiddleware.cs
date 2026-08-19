@@ -37,6 +37,7 @@ public class ExceptionHandlingMiddleware
         {
             InvalidCredentialException => StatusCodes.Status401Unauthorized,
             UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+            DuplicateEmailException => StatusCodes.Status409Conflict,
             EntityNotFoundException => StatusCodes.Status404NotFound,
             EntityCreatingException => StatusCodes.Status422UnprocessableEntity,
             EntityUpdatingException => StatusCodes.Status422UnprocessableEntity,

@@ -35,8 +35,8 @@ public class UsersService : IUsersService
             Email = email,
             PasswordHash = hashedPassword,
         };
-        
-        await _usersRepository.RegisterUserAsync(user, cancellationToken); //TODO: добавить проверку на существующий email
+
+        await _usersRepository.RegisterUserAsync(user, cancellationToken);
     }
 
     public async Task<(string, string)> LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)

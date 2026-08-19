@@ -1,4 +1,5 @@
-﻿using MeetSpace.Application.Settings;
+﻿using EntityFramework.Exceptions.PostgreSQL;
+using MeetSpace.Application.Settings;
 using MeetSpace.DataAccess.Configurations;
 using MeetSpace.Domain.Models;
 using MeetSpace.Domain.Models.Tokens;
@@ -21,7 +22,9 @@ public class MeetSpaceDbContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("PostgreSqlConnectionString"));
+        optionsBuilder
+            .UseNpgsql(_configuration.GetConnectionString("PostgreSqlConnectionString"))
+            .UseExceptionProcessor();
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

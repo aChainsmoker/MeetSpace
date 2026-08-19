@@ -1,4 +1,6 @@
-﻿using MeetSpace.Application.Abstractions.Repositories;
+﻿using EntityFramework.Exceptions.Common;
+using MeetSpace.Application.Abstractions.Repositories;
+using MeetSpace.Application.Exceptions;
 using MeetSpace.DataAccess.Context;
 using MeetSpace.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +35,14 @@ public class UsersRepository : IUsersRepository
     public async Task RegisterUserAsync(User user, CancellationToken cancellationToken = default)
     {
         await _dbContext.Users.AddAsync(user, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (UniqueConstraintException)
+        {
+            throw new DuplicateEmailException("Such email is already registered.");
+        }
     }
 
     public async Task UpdateUserAsync(User user, CancellationToken cancellationToken = default)
