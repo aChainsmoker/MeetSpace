@@ -58,7 +58,7 @@ public class UsersService : IUsersService
         return (accessToken, refreshToken);
     }
 
-    public async Task<string> LoginUserAsync(string refreshToken, CancellationToken cancellationToken = default)
+    public async Task<string> RefreshAccessTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
     {
         bool loginResult;
         try
