@@ -16,6 +16,7 @@ import '@/pages/RoomsPage.css';
 import {CreateBookingRequest} from "@/models/CreateBookingRequest";
 import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
 import {GetRoomResponse} from "@/models/GetRoomResponse";
+import {useDisclosure} from "@mantine/hooks";
 
 export default function RoomsPage() {
     const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ export default function RoomsPage() {
     const userId = useAppSelector((state) => state.user.user?.id ?? null);
     const [selectedRoom, setSelectedRoom] = useState<GetRoomResponse | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [bookingModalOpened, setBookingModalOpened] = useState(false);
+    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
 
     const selectedRoomId = selectedRoom?.id ?? null;
     const detailedRoom = useAppSelector((state) =>
@@ -95,7 +96,7 @@ export default function RoomsPage() {
     );
 
     const handleBookRoom = useCallback(() => {
-        setBookingModalOpened(true);
+        handleOpeningModal();
     }, []);
 
     return (
@@ -133,7 +134,8 @@ export default function RoomsPage() {
                 opened={bookingModalOpened}
                 isEditing={false}
                 initialRoomId={selectedRoom?.id ?? null}
-                onClose={() => setBookingModalOpened(false)}
+                booking={null}
+                onClose={handleClosingModal}
                 rooms={rooms}
                 userId={userId}
                 onFetchRooms={handleFetchRooms}

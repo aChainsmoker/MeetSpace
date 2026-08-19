@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {Button, Tabs, Text} from '@mantine/core';
-import {useMediaQuery} from '@mantine/hooks';
+import {useDisclosure, useMediaQuery} from '@mantine/hooks';
 import {notifications} from '@mantine/notifications';
 import {PlusIcon} from '@phosphor-icons/react';
 import BookingRow from '@/components/BookingRow/BookingRow';
@@ -8,10 +8,10 @@ import BookingModal from '@/components/BookingModal/BookingModal';
 import FloatingActionButton from '@/components/FloatingActionButton/FloatingActionButton';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import {
-  createBookingAsync,
-  deleteBookingAsync,
-  fetchUserBookingsAsync,
-  updateBookingAsync
+    createBookingAsync,
+    deleteBookingAsync,
+    fetchUserBookingsAsync,
+    updateBookingAsync
 } from '@/store/actions/bookingsActions';
 import {fetchRoomsAsync} from '@/store/actions/roomsActions';
 import '@/pages/MyBookingsPage.css';
@@ -24,8 +24,8 @@ export default function MyBookingsPage() {
     const bookings = useAppSelector((state) => state.bookings.userBookings);
     const rooms = useAppSelector((state) => state.rooms.rooms);
     const userId = useAppSelector((state) => state.user.user?.id ?? null);
-    const [modalOpened, setModalOpened] = useState(false);
     const [editingBooking, setEditingBooking] = useState<GetBookingResponse | null>(null);
+    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
     const isMobile = useMediaQuery('(max-width: 62em)');
 
     const loadBookings = useCallback(() => {
@@ -48,13 +48,13 @@ export default function MyBookingsPage() {
 
     const handleCreate = useCallback(() => {
         setEditingBooking(null);
-        setModalOpened(true);
+        handleOpeningModal();
     }, []);
 
     const handleEdit = useCallback((booking: GetBookingResponse) => {
         setEditingBooking(booking);
-        setModalOpened(true);
-    }, []);
+        handleOpeningModal();
+        }, []);
 
     const handleDelete = useCallback((booking: GetBookingResponse) => {
         dispatch(deleteBookingAsync(booking.id))
@@ -145,10 +145,10 @@ export default function MyBookingsPage() {
             </Button>
             <FloatingActionButton onClick={handleCreate}/>
             <BookingModal
-                opened={modalOpened}
+                opened={bookingModalOpened}
                 isEditing={editingBooking !== null}
                 booking={editingBooking}
-                onClose={() => setModalOpened(false)}
+                onClose={handleClosingModal}
                 rooms={rooms}
                 userId={userId}
                 onFetchRooms={handleFetchRooms}

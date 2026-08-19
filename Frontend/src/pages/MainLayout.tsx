@@ -23,7 +23,7 @@ export default function MainLayout() {
     const imageUrl = useAppSelector((state) => state.user.imageUrl);
     const rooms = useAppSelector((state) => state.rooms.rooms);
     const userId = user?.id ?? null;
-    const [bookingModalOpened, {open: openBookingModal, close: closeBookingModal}] = useDisclosure(false);
+    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
 
     useEffect(() => {
         dispatch(fetchUserAsync(true)).catch(() => {
@@ -91,7 +91,7 @@ export default function MainLayout() {
                         <Button
                             className="main-layout__add-button"
                             size="lg"
-                            onClick={openBookingModal}
+                            onClick={handleOpeningModal}
                         >
                             <PlusIcon
                                 className="add-button__plus"
@@ -122,7 +122,7 @@ export default function MainLayout() {
             <BookingModal
                 opened={bookingModalOpened}
                 isEditing={false}
-                onClose={closeBookingModal}
+                onClose={handleClosingModal}
                 rooms={rooms}
                 userId={userId}
                 onFetchRooms={handleFetchRooms}

@@ -50,6 +50,13 @@ export default function BookingModal({
                                      }: BookingModalProps) {
     const [submitting, setSubmitting] = useState(false);
 
+    useEffect(() => {
+        if(!opened) {
+            form.reset();
+            return;
+        }
+    }, [opened]);
+
     const form = useForm<BookingFormValues>({
         initialValues: {
             roomId: null,

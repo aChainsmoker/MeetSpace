@@ -11,10 +11,7 @@ import RoomsCarousel from '@/components/RoomsCarousel/RoomsCarousel';
 import RoomDetailCard from '@/components/RoomDetailCard/RoomDetailCard';
 import BookingModal from '@/components/BookingModal/BookingModal';
 import Scheduler from '@/components/Scheduler/Scheduler';
-import {
-  getBookings,
-
-} from '@/services/BookingService';
+import {getBookings,} from '@/services/BookingService';
 import {buildOccupiedUntilMap} from '@/utils/occupiedUntilMap';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import {fetchBookingsForRoomAsync, fetchRoomByIdAsync, fetchRoomsAsync,} from '@/store/actions/roomsActions';
@@ -26,6 +23,7 @@ import {CreateBookingRequest} from "@/models/CreateBookingRequest";
 import {UpdateBookingRequest} from "@/models/UpdateBookingRequest";
 import {BookingsFilter} from "@/models/BookingsFilter";
 import {GetRoomResponse} from "@/models/GetRoomResponse";
+import {useDisclosure} from "@mantine/hooks";
 
 const monthFormatter = new Intl.DateTimeFormat('ru-RU', {day: 'numeric', month: 'long'});
 const weekdayFormatter = new Intl.DateTimeFormat('ru-RU', {weekday: 'long'});
@@ -56,9 +54,9 @@ export default function HomePage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [capacity, setCapacity] = useState<string | number>('');
     const [equipmentIds, setEquipmentIds] = useState<string[]>([]);
-    const [modalOpened, setModalOpened] = useState(false);
     const [editingBooking, setEditingBooking] = useState<GetBookingResponse | null>(null);
     const [occupancyBookings, setOccupancyBookings] = useState<GetBookingResponse[]>([]);
+    const [bookingModalOpened, {open: handleOpeningModal, close: handleClosingModal}] = useDisclosure(false);
 
     const selectedRoomId = selectedRoom?.id ?? null;
     const detailedRoom = useAppSelector((state) =>
@@ -139,7 +137,7 @@ export default function HomePage() {
                 return;
             }
             setEditingBooking(booking);
-            setModalOpened(true);
+            handleOpeningModal();
         },
         [user, currentUserId]
     );
@@ -155,21 +153,21 @@ export default function HomePage() {
         [dispatch, filter, loadOccupancy]
     );
 
-  const handleCreateBooking = useCallback(
-    async (request: CreateBookingRequest) => {
-      await dispatch(createBookingAsync(request));
-      dispatch(fetchBookingsAsync(filter)).catch(() => {
-        notifications.show({ color: 'red', message: 'Произошла ошибка при загрузке бронирований' });
-      });
-      loadOccupancy();
-    },
-    [dispatch, filter, loadOccupancy]
-  );
+    const handleCreateBooking = useCallback(
+        async (request: CreateBookingRequest) => {
+            await dispatch(createBookingAsync(request));
+            dispatch(fetchBookingsAsync(filter)).catch(() => {
+                notifications.show({color: 'red', message: 'Произошла ошибка при загрузке бронирований'});
+            });
+            loadOccupancy();
+        },
+        [dispatch, filter, loadOccupancy]
+    );
 
-  const handleBookRoom = useCallback(() => {
-    setEditingBooking(null);
-    setModalOpened(true);
-  }, []);
+    const handleBookRoom = useCallback(() => {
+        setEditingBooking(null);
+        handleOpeningModal();
+    }, []);
 
     return (
         <div className="home-page">
@@ -242,14 +240,11 @@ export default function HomePage() {
                 )}
             </div>
             <BookingModal
-                opened={modalOpened}
+                opened={bookingModalOpened}
                 isEditing={editingBooking !== null}
                 booking={editingBooking}
                 initialRoomId={selectedRoom?.id ?? null}
-                onClose={() => {
-                    setModalOpened(false);
-                    setEditingBooking(null);
-                }}
+                onClose={handleClosingModal}
                 rooms={rooms}
                 userId={currentUserId}
                 onFetchRooms={handleFetchRooms}
