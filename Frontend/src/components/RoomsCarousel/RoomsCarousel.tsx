@@ -14,13 +14,7 @@ interface RoomsCarouselProps {
     onFetch: () => void;
 }
 
-export default function RoomsCarousel({
-                                          rooms,
-                                          selectedRoomId,
-                                          occupiedUntilMap,
-                                          onSelect,
-                                          onFetch
-                                      }: RoomsCarouselProps) {
+export default function RoomsCarousel({rooms, selectedRoomId, occupiedUntilMap, onSelect, onFetch}: RoomsCarouselProps) {
     const autoplayRef = useRef(Autoplay({delay: 2000, stopOnInteraction: false}));
     const plugins = useMemo(() => [autoplayRef.current], []);
 

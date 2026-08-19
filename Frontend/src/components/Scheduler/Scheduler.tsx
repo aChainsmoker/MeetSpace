@@ -18,16 +18,7 @@ interface SchedulerProps {
     onEventClick?: (booking: GetBookingResponse) => void;
 }
 
-export default function Scheduler({
-                                      date,
-                                      startTime,
-                                      endTime,
-                                      filter,
-                                      bookings,
-                                      currentUserId,
-                                      onFetchBookings,
-                                      onEventClick,
-                                  }: SchedulerProps) {
+export default function Scheduler({date, startTime, endTime, filter, bookings, currentUserId, onFetchBookings, onEventClick,}: SchedulerProps) {
     const effectiveStart = `${startTime || '09:00'}:00`;
     const effectiveEnd = `${endTime || '18:59'}:00`;
     const [containerWidth, setContainerWidth] = useState(0);

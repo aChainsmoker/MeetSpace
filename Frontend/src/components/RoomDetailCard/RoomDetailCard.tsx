@@ -55,15 +55,7 @@ function formatTimeRange(start: string, end: string) {
     return `${fmt(start)} – ${fmt(end)}`;
 }
 
-export default function RoomDetailCard({
-                                           room,
-                                           detailedRoom,
-                                           bookings,
-                                           onClose,
-                                           onFetchDetail,
-                                           onFetchBookings,
-                                           onBook
-                                       }: RoomDetailCardProps) {
+export default function RoomDetailCard({room, detailedRoom, bookings, onClose, onFetchDetail, onFetchBookings, onBook}: RoomDetailCardProps) {
     const isMobile = useMediaQuery('(max-width: 48em)');
     const [showAllAmenities, setShowAllAmenities] = useState(false);
     const [visibleBookingCount, setVisibleBookingCount] = useState(3);

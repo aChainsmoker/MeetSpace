@@ -35,19 +35,7 @@ interface BookingFormValues {
     description: string;
 }
 
-export default function BookingModal({
-                                         opened,
-                                         isEditing,
-                                         booking,
-                                         initialRoomId,
-                                         onClose,
-                                         onSaved,
-                                         rooms,
-                                         userId,
-                                         onFetchRooms,
-                                         onCreate,
-                                         onUpdate,
-                                     }: BookingModalProps) {
+export default function BookingModal({opened, isEditing, booking, initialRoomId, onClose, onSaved, rooms, userId, onFetchRooms, onCreate, onUpdate,}: BookingModalProps) {
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
