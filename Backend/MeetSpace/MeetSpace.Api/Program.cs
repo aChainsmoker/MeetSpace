@@ -50,6 +50,6 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseCors(corsPolicyName);
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
 app.UseHttpsRedirection();
+app.MapControllers();
 app.Run();
