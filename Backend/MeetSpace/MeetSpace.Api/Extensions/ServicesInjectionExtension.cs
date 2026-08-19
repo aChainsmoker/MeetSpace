@@ -24,7 +24,7 @@ public static class ServicesInjectionExtension
         services.AddScoped<IRoomService, RoomService>();
         services.AddScoped<IBookingsService, BookingsService>();
         services.AddScoped<IUsersRepository, UsersRepository>();
-        services.AddScoped<IRoomsRepository, RoomsesRepository>();
+        services.AddScoped<IRoomsRepository, RoomsRepository>();
         services.AddScoped<IBookingsRepository, BookingsRepository>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();

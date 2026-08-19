@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeetSpace.DataAccess.Repositories;
 
-public class RoomsesRepository : IRoomsRepository
+public class RoomsRepository : IRoomsRepository
 {
     private readonly MeetSpaceDbContext _dbContext;
 
-    public RoomsesRepository(MeetSpaceDbContext dbContext)
+    public RoomsRepository(MeetSpaceDbContext dbContext)
     {
         _dbContext = dbContext;
     }
