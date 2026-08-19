@@ -47,8 +47,8 @@ public class RoomService : IRoomService
 
     public async Task UploadRoomImageAsync(Guid roomId, string photo, CancellationToken cancellationToken = default)
     {
-        var room = await GetRoomByIdAsync(roomId, cancellationToken);
-        if (room.Photo != null)
+        var room = await _roomsRepository.GetRoomByIdAsync(roomId, cancellationToken);
+        if (room?.Photo != null)
         {
             await _fileStorageService.DeleteFileAsync(room.Photo, cancellationToken);
         }
