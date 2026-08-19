@@ -139,7 +139,7 @@ export default function HomePage() {
             setEditingBooking(booking);
             handleOpeningModal();
         },
-        [user, currentUserId]
+        [user, currentUserId, handleOpeningModal]
     );
 
     const handleUpdateBooking = useCallback(
@@ -167,7 +167,7 @@ export default function HomePage() {
     const handleBookRoom = useCallback(() => {
         setEditingBooking(null);
         handleOpeningModal();
-    }, []);
+    }, [handleOpeningModal]);
 
     return (
         <div className="home-page">

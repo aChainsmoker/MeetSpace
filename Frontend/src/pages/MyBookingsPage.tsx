@@ -38,7 +38,7 @@ export default function MyBookingsPage() {
         loadBookings();
     }, [loadBookings]);
 
-    const now = Date.now();
+    const [now] = useState(() => Date.now());
     const upcoming = bookings.filter(
         (b) => new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now
     );
@@ -49,12 +49,12 @@ export default function MyBookingsPage() {
     const handleCreate = useCallback(() => {
         setEditingBooking(null);
         handleOpeningModal();
-    }, []);
+    }, [handleOpeningModal]);
 
     const handleEdit = useCallback((booking: GetBookingResponse) => {
         setEditingBooking(booking);
         handleOpeningModal();
-        }, []);
+        }, [handleOpeningModal]);
 
     const handleDelete = useCallback((booking: GetBookingResponse) => {
         dispatch(deleteBookingAsync(booking.id))

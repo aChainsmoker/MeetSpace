@@ -121,7 +121,7 @@ export default function Scheduler({date, startTime, endTime, filter, bookings, c
                         </div>
                     </div>
                 )}
-                renderEvent={(event, {children: _children, ...eventProps}) => (
+                renderEvent={(event, {...eventProps}) => (
                     <HoverCard
                         width={280}
                         position="bottom"

@@ -80,9 +80,9 @@ export default function RoomDetailCard({room, detailedRoom, bookings, onClose, o
     const equip = detailedRoom?.roomEquipments ?? [];
     const hasManyAmenities = equip.length > 4;
     const visibleAmenities = showAllAmenities ? equip : equip.slice(0, 4);
+    const [now] = useState(() => Date.now());
 
     const futureBookings = useMemo(() => {
-        const now = Date.now();
         return bookings
             .filter((b) => new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now)
             .sort(
@@ -90,7 +90,7 @@ export default function RoomDetailCard({room, detailedRoom, bookings, onClose, o
                     new Date(`${a.bookingDate}T${a.startOfBookingTime}`).getTime() -
                     new Date(`${b.bookingDate}T${b.startOfBookingTime}`).getTime()
             );
-    }, [bookings]);
+    }, [bookings, now]);
 
     const visibleBookings = useMemo(() => futureBookings.slice(0, visibleBookingCount), [futureBookings, visibleBookingCount]);
 

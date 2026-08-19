@@ -38,13 +38,6 @@ interface BookingFormValues {
 export default function BookingModal({opened, isEditing, booking, initialRoomId, onClose, onSaved, rooms, userId, onFetchRooms, onCreate, onUpdate,}: BookingModalProps) {
     const [submitting, setSubmitting] = useState(false);
 
-    useEffect(() => {
-        if(!opened) {
-            form.reset();
-            return;
-        }
-    }, [opened]);
-
     const form = useForm<BookingFormValues>({
         initialValues: {
             roomId: null,
@@ -77,6 +70,13 @@ export default function BookingModal({opened, isEditing, booking, initialRoomId,
             title: (value) => (value.trim() ? null : 'Введите название встречи'),
         },
     });
+
+    useEffect(() => {
+        if(!opened) {
+            form.reset();
+            return;
+        }
+    }, [opened]);
 
     const roomOptions = useMemo(
         () => rooms.map((room) => ({value: room.id, label: room.name})),

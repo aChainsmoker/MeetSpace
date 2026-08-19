@@ -7,10 +7,9 @@ interface RoomCardProps {
     room: GetRoomResponse;
     occupiedUntil?: string | null;
     onClick?: () => void;
-    selected?: boolean;
 }
 
-export default function RoomCard({room, occupiedUntil, onClick, selected}: RoomCardProps) {
+export default function RoomCard({room, occupiedUntil, onClick}: RoomCardProps) {
     return (
         <Card
             w={{base: 150, md: 300}}

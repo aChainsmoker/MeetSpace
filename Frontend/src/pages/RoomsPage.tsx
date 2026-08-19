@@ -97,7 +97,7 @@ export default function RoomsPage() {
 
     const handleBookRoom = useCallback(() => {
         handleOpeningModal();
-    }, []);
+    }, [handleOpeningModal]);
 
     return (
         <div className="rooms-page">

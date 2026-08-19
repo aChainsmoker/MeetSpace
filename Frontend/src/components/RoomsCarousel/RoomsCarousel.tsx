@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {Carousel} from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -15,8 +15,8 @@ interface RoomsCarouselProps {
 }
 
 export default function RoomsCarousel({rooms, selectedRoomId, occupiedUntilMap, onSelect, onFetch}: RoomsCarouselProps) {
-    const autoplayRef = useRef(Autoplay({delay: 2000, stopOnInteraction: false}));
-    const plugins = useMemo(() => [autoplayRef.current], []);
+    const [autoplay] = useState(() => Autoplay({delay: 2000, stopOnInteraction: false}));
+    const plugins = [autoplay];
 
     useEffect(() => {
         onFetch();
@@ -32,7 +32,6 @@ export default function RoomsCarousel({rooms, selectedRoomId, occupiedUntilMap, 
                         <RoomCard
                             room={room}
                             occupiedUntil={occupiedUntilMap?.[room.id] ?? null}
-                            selected={selectedRoomId === room.id}
                             onClick={() => onSelect(room)}
                         />
                     </div>
