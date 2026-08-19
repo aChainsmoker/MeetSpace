@@ -21,6 +21,7 @@ builder.Services.AddMeetSpaceServices();
 builder.Services.AddS3Storage();
 builder.Services.ConfigureOptions(builder.Configuration);
 builder.Services.AddAutoMapper(cfg => { }, typeof(UserProfile));
+builder.Services.AddHttpContextAccessor();
 var corsPolicyName = builder.Services.AddCorsPolicy(builder.Configuration);
 
 var app = builder.Build();
