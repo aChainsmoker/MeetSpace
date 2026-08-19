@@ -3,6 +3,7 @@ using AutoMapper;
 using MeetSpace.Api.Contracts.Bookings;
 using MeetSpace.Domain.Abstractions.Services;
 using MeetSpace.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetSpace.Api.Controllers;
@@ -44,25 +45,30 @@ public class BookingsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult> CreateBookingAsync([FromBody] CreateBookingRequest bookingRequest, CancellationToken cancellationToken = default)
     {
         var booking = _mapper.Map<Booking>(bookingRequest);
+        booking.UserId = new Guid(GetCurrentUserId());
         await _bookingsService.CreateBookingAsync(booking, cancellationToken);
         
         return Ok();
     }
     
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult> UpdateBookingAsync([FromRoute]Guid id, [FromBody] UpdateBookingRequest bookingRequest, CancellationToken cancellationToken = default)
     {
         var booking = _mapper.Map<Booking>(bookingRequest);
         booking.Id = id;
+        booking.UserId = new Guid(GetCurrentUserId());
         await _bookingsService.UpdateBookingAsync(booking, cancellationToken);
         
         return Ok();
     }
     
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> CancelBookingAsync([FromRoute]Guid id, CancellationToken cancellationToken = default)
     {
         await _bookingsService.DeleteBookingAsync(id, cancellationToken);
@@ -81,6 +87,7 @@ public class BookingsController : ControllerBase
     }
     
     [HttpGet("user")]
+    [Authorize]
     public async Task<ActionResult<List<GetBookingResponse>>> GetBookingsForUserAsync(
         CancellationToken cancellationToken = default)
     {
