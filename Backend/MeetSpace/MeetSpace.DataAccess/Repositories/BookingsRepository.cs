@@ -116,13 +116,6 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
                 .Include(x => x.Room);
         }
 
-        if (filter.Capacity != null)
-        {
-            bookings = bookings
-                .Where(x => x.Room.Capacity >= filter.Capacity)
-                .Include(x => x.Room);
-        }
-
         if (filter.RoomEquipmentsIds.Any())
         {
             bookings = bookings
