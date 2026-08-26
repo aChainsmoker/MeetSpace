@@ -24,7 +24,7 @@ const initialState: BookingsState = {
 
 const bookingsReducer = (
     state: BookingsState | undefined = initialState,
-    action: BookingsAction,
+    action: BookingsAction
 ): BookingsState => {
     switch (action.type) {
         case BOOKINGS_FETCH_LOAD:

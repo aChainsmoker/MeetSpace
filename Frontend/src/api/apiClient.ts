@@ -53,7 +53,7 @@ async function refreshAccessToken(): Promise<string | null> {
 
 async function sendRequest(
     path: string,
-    options: ApiRequestOptions = {},
+    options: ApiRequestOptions = {}
 ): Promise<Response> {
     const { body, ...rest } = options;
     const accessToken = getAccessToken();
@@ -76,7 +76,7 @@ async function sendRequest(
 
 export async function apiRequest<T>(
     path: string,
-    options: ApiRequestOptions = {},
+    options: ApiRequestOptions = {}
 ): Promise<T> {
     let response = await sendRequest(path, options);
 

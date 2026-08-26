@@ -83,14 +83,14 @@ export default function Scheduler({
         Math.floor(
             (Date.parse(`${dateStr}T${effectiveEnd}`) -
                 Date.parse(`${dateStr}T${effectiveStart}`)) /
-                3_600_000,
+                3_600_000
         ),
-        1,
+        1
     );
     const slotWidth = containerWidth
         ? Math.max(
               Math.floor((containerWidth - resourceLabelWidth) / numberOfHours),
-              130,
+              130
           )
         : 150;
 
@@ -171,7 +171,7 @@ export default function Scheduler({
                                 </span>
                                 <span className="scheduler__event-card-time">
                                     {dayjs(event.start).format(
-                                        'DD.MM.YYYY, HH:mm',
+                                        'DD.MM.YYYY, HH:mm'
                                     )}{' '}
                                     - {dayjs(event.end).format('HH:mm')}
                                 </span>

@@ -17,7 +17,7 @@ export const setRoomDetail = (room: GetRoomResponse) =>
     ({ type: ROOMS_FETCH_DETAIL, payload: room }) as const;
 export const setRoomBookings = (
     roomId: string,
-    bookings: GetBookingResponse[],
+    bookings: GetBookingResponse[]
 ) =>
     ({
         type: ROOMS_FETCH_ROOM_BOOKINGS,

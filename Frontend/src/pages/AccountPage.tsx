@@ -28,7 +28,7 @@ export default function AccountPage() {
             }
             await dispatch(fetchUserAsync());
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleLogout = useCallback(async () => {

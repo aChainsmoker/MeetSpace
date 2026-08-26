@@ -22,7 +22,7 @@ export default function RoomsCarousel({
     onFetch,
 }: RoomsCarouselProps) {
     const [autoplay] = useState(() =>
-        Autoplay({ delay: 2000, stopOnInteraction: false }),
+        Autoplay({ delay: 2000, stopOnInteraction: false })
     );
     const plugins = [autoplay];
 
@@ -48,7 +48,7 @@ export default function RoomsCarousel({
                     </div>
                 </Carousel.Slide>
             )),
-        [rooms, selectedRoomId, occupiedUntilMap, onSelect],
+        [rooms, selectedRoomId, occupiedUntilMap, onSelect]
     );
 
     return (

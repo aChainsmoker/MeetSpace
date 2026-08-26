@@ -18,14 +18,17 @@ const SLOT_BORDER_ALLOWANCE = HOURS * (60 / INTERVAL_MINUTES);
 
 function toEvent(
     booking: GetBookingResponse,
-    currentUserId: string | null,
+    currentUserId: string | null
 ): ScheduleEventData {
     return {
         id: booking.id,
         title: booking.title,
         start: `${booking.bookingDate} ${booking.startOfBookingTime}`,
         end: `${booking.bookingDate} ${booking.endOfBookingTime}`,
-        color: currentUserId === booking.userId ? 'var(--blue-color)' : 'var(--orange-color)',
+        color:
+            currentUserId === booking.userId
+                ? 'var(--blue-color)'
+                : 'var(--orange-color)',
     };
 }
 
@@ -34,7 +37,7 @@ export default function CalendarPage() {
     const user = useAppSelector((state) => state.user.user);
     const currentUserId = user?.id ?? null;
     const dateRangeBookings = useAppSelector(
-        (state) => state.bookings.dateRangeBookings,
+        (state) => state.bookings.dateRangeBookings
     );
     const isLoading = useAppSelector((state) => state.bookings.isLoading);
     const [view, setView] = useState<'month' | 'day'>('month');
@@ -66,7 +69,7 @@ export default function CalendarPage() {
 
     const monthEvents = useMemo(
         () => dateRangeBookings.map((b) => toEvent(b, currentUserId)),
-        [dateRangeBookings, currentUserId],
+        [dateRangeBookings, currentUserId]
     );
 
     const dayEvents = useMemo(
@@ -74,16 +77,16 @@ export default function CalendarPage() {
             dateRangeBookings
                 .filter((b) => b.bookingDate === selectedDay)
                 .map((b) => toEvent(b, currentUserId)),
-        [dateRangeBookings, selectedDay, currentUserId],
+        [dateRangeBookings, selectedDay, currentUserId]
     );
 
     const slotHeight = useMemo(
         () =>
             Math.max(
                 Math.floor((dayHeight - SLOT_BORDER_ALLOWANCE) / HOURS),
-                70,
+                70
             ),
-        [dayHeight],
+        [dayHeight]
     );
 
     if (view === 'day' && selectedDay) {

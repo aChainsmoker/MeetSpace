@@ -48,11 +48,11 @@ export default function MyBookingsPage() {
     const [now] = useState(() => Date.now());
     const upcoming = bookings.filter(
         (b) =>
-            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now,
+            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() > now
     );
     const past = bookings.filter(
         (b) =>
-            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() <= now,
+            new Date(`${b.bookingDate}T${b.endOfBookingTime}`).getTime() <= now
     );
 
     const handleCreate = useCallback(() => {
@@ -65,7 +65,7 @@ export default function MyBookingsPage() {
             setEditingBooking(booking);
             handleOpeningModal();
         },
-        [handleOpeningModal],
+        [handleOpeningModal]
     );
 
     const handleDelete = useCallback(
@@ -78,7 +78,7 @@ export default function MyBookingsPage() {
                             message:
                                 'Произошла ошибка при загрузке ваших бронирований',
                         });
-                    }),
+                    })
                 )
                 .catch(() => {
                     notifications.show({
@@ -87,7 +87,7 @@ export default function MyBookingsPage() {
                     });
                 });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleFetchRooms = useCallback(() => {
@@ -109,7 +109,7 @@ export default function MyBookingsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleUpdateBooking = useCallback(
@@ -122,7 +122,7 @@ export default function MyBookingsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const renderList = (items: GetBookingResponse[]) =>

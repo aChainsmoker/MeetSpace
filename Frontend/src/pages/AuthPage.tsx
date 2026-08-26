@@ -16,13 +16,13 @@ export default function AuthPage() {
     const handleRegister = useCallback(
         async (
             registerData: AuthRegisterRequest,
-            loginData: AuthLoginRequest,
+            loginData: AuthLoginRequest
         ) => {
             await dispatch(registerAsync(registerData));
             await dispatch(loginAsync(loginData));
             navigate('/');
         },
-        [dispatch, navigate],
+        [dispatch, navigate]
     );
 
     const handleLogin = useCallback(
@@ -30,7 +30,7 @@ export default function AuthPage() {
             await dispatch(loginAsync(data));
             navigate('/');
         },
-        [dispatch, navigate],
+        [dispatch, navigate]
     );
 
     return (

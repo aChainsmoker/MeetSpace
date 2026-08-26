@@ -11,7 +11,7 @@ interface AuthFormProps {
     isRegister: boolean;
     onRegister: (
         registerData: AuthRegisterRequest,
-        loginData: AuthLoginRequest,
+        loginData: AuthLoginRequest
     ) => Promise<void>;
     onLogin: (data: AuthLoginRequest) => Promise<void>;
 }
@@ -70,7 +70,7 @@ export default function AuthForm({
                         email: values.email,
                         password: values.password,
                         rememberMe: values.rememberMe,
-                    },
+                    }
                 );
             } else {
                 await onLogin({
@@ -154,7 +154,7 @@ export default function AuthForm({
                         navigate(
                             isRegister
                                 ? '/authentication'
-                                : '/authentication?isRegister=true',
+                                : '/authentication?isRegister=true'
                         )
                     }
                 >

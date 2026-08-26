@@ -61,14 +61,14 @@ export default function MainLayout() {
         async (request: CreateBookingRequest) => {
             await dispatch(createBookingAsync(request));
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleUpdateBooking = useCallback(
         async (id: string, request: UpdateBookingRequest) => {
             await dispatch(updateBookingAsync(id, request));
         },
-        [dispatch],
+        [dispatch]
     );
 
     return (

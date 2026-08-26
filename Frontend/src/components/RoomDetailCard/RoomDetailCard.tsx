@@ -104,23 +104,23 @@ export default function RoomDetailCard({
             .filter(
                 (b) =>
                     new Date(
-                        `${b.bookingDate}T${b.endOfBookingTime}`,
-                    ).getTime() > now,
+                        `${b.bookingDate}T${b.endOfBookingTime}`
+                    ).getTime() > now
             )
             .sort(
                 (a, b) =>
                     new Date(
-                        `${a.bookingDate}T${a.startOfBookingTime}`,
+                        `${a.bookingDate}T${a.startOfBookingTime}`
                     ).getTime() -
                     new Date(
-                        `${b.bookingDate}T${b.startOfBookingTime}`,
-                    ).getTime(),
+                        `${b.bookingDate}T${b.startOfBookingTime}`
+                    ).getTime()
             );
     }, [bookings, now]);
 
     const visibleBookings = useMemo(
         () => futureBookings.slice(0, visibleBookingCount),
-        [futureBookings, visibleBookingCount],
+        [futureBookings, visibleBookingCount]
     );
 
     const handleShowMoreBookings = () => {
@@ -212,13 +212,13 @@ export default function RoomDetailCard({
                                         <div className="room-detail-card__booking-left">
                                             <Text size="sm" c="dimmed">
                                                 {formatBookingDate(
-                                                    b.bookingDate,
+                                                    b.bookingDate
                                                 )}
                                             </Text>
                                             <Text size="sm">
                                                 {formatTimeRange(
                                                     b.startOfBookingTime,
-                                                    b.endOfBookingTime,
+                                                    b.endOfBookingTime
                                                 )}
                                             </Text>
                                         </div>

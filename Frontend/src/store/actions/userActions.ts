@@ -37,7 +37,7 @@ export const fetchUserAsync =
         if (user.profileImageKey) {
             try {
                 const { profileImageUrl } = await getProfileImage(
-                    user.profileImageKey,
+                    user.profileImageKey
                 );
                 dispatch(setUserImage(profileImageUrl));
             } catch {

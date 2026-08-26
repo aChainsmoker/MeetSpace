@@ -55,14 +55,14 @@ export default function HomePage() {
     const equipment = useAppSelector((state) => state.equipment.equipment);
     const equipmentData = useMemo(
         () => equipment.map((item) => ({ value: item.id, label: item.name })),
-        [equipment],
+        [equipment]
     );
 
     const [selectedDate, setSelectedDate] = useState<string | null>(today);
     const [startTime, setStartTime] = useState('09:00');
     const [endTime, setEndTime] = useState('18:00');
     const [selectedRoom, setSelectedRoom] = useState<GetRoomResponse | null>(
-        null,
+        null
     );
     const [searchQuery, setSearchQuery] = useState('');
     const [capacity, setCapacity] = useState<string | number>('');
@@ -81,10 +81,10 @@ export default function HomePage() {
     const detailedRoom = useAppSelector((state) =>
         selectedRoomId
             ? (state.rooms.detailedRoom[selectedRoomId] ?? null)
-            : null,
+            : null
     );
     const roomBookings = useAppSelector((state) =>
-        selectedRoomId ? (state.rooms.roomBookings[selectedRoomId] ?? []) : [],
+        selectedRoomId ? (state.rooms.roomBookings[selectedRoomId] ?? []) : []
     );
 
     const filter = useMemo<BookingsFilter>(() => {
@@ -134,7 +134,7 @@ export default function HomePage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const loadOccupancy = useCallback(() => {
@@ -155,7 +155,7 @@ export default function HomePage() {
 
     const occupiedUntilMap = useMemo(
         () => buildOccupiedUntilMap(occupancyBookings),
-        [occupancyBookings],
+        [occupancyBookings]
     );
 
     const handleFetchRoomDetail = useCallback(
@@ -167,7 +167,7 @@ export default function HomePage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleFetchRoomBookings = useCallback(
@@ -180,7 +180,7 @@ export default function HomePage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleEventClick = useCallback(
@@ -192,7 +192,7 @@ export default function HomePage() {
             setEditingBooking(booking);
             handleOpeningModal();
         },
-        [user, currentUserId, handleOpeningModal],
+        [user, currentUserId, handleOpeningModal]
     );
 
     const handleUpdateBooking = useCallback(
@@ -206,7 +206,7 @@ export default function HomePage() {
             });
             loadOccupancy();
         },
-        [dispatch, filter, loadOccupancy],
+        [dispatch, filter, loadOccupancy]
     );
 
     const handleCreateBooking = useCallback(
@@ -220,7 +220,7 @@ export default function HomePage() {
             });
             loadOccupancy();
         },
-        [dispatch, filter, loadOccupancy],
+        [dispatch, filter, loadOccupancy]
     );
 
     const handleBookRoom = useCallback(() => {

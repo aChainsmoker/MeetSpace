@@ -22,7 +22,7 @@ const initialState: UserState = {
 
 const userReducer = (
     state: UserState | undefined = initialState,
-    action: UserAction,
+    action: UserAction
 ): UserState => {
     switch (action.type) {
         case USER_FETCH_LOAD:

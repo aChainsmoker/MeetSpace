@@ -28,7 +28,7 @@ export default function RoomsPage() {
     const bookings = useAppSelector((state) => state.bookings.bookings);
     const userId = useAppSelector((state) => state.user.user?.id ?? null);
     const [selectedRoom, setSelectedRoom] = useState<GetRoomResponse | null>(
-        null,
+        null
     );
     const [searchQuery, setSearchQuery] = useState('');
     const [
@@ -40,10 +40,10 @@ export default function RoomsPage() {
     const detailedRoom = useAppSelector((state) =>
         selectedRoomId
             ? (state.rooms.detailedRoom[selectedRoomId] ?? null)
-            : null,
+            : null
     );
     const roomBookings = useAppSelector((state) =>
-        selectedRoomId ? (state.rooms.roomBookings[selectedRoomId] ?? []) : [],
+        selectedRoomId ? (state.rooms.roomBookings[selectedRoomId] ?? []) : []
     );
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function RoomsPage() {
 
     const occupiedUntilMap = useMemo(
         () => buildOccupiedUntilMap(bookings),
-        [bookings],
+        [bookings]
     );
 
     const filteredRooms = useMemo(() => {
@@ -92,7 +92,7 @@ export default function RoomsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleFetchRoomBookings = useCallback(
@@ -105,7 +105,7 @@ export default function RoomsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleCreateBooking = useCallback(
@@ -118,7 +118,7 @@ export default function RoomsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleUpdateBooking = useCallback(
@@ -131,7 +131,7 @@ export default function RoomsPage() {
                 });
             });
         },
-        [dispatch],
+        [dispatch]
     );
 
     const handleBookRoom = useCallback(() => {

@@ -18,7 +18,7 @@ const initialState: EquipmentState = {
 
 const equipmentReducer = (
     state: EquipmentState | undefined = initialState,
-    action: EquipmentAction,
+    action: EquipmentAction
 ): EquipmentState => {
     switch (action.type) {
         case EQUIPMENT_FETCH_LOAD:

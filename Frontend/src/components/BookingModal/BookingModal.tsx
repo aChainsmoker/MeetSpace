@@ -107,7 +107,7 @@ export default function BookingModal({
 
     const roomOptions = useMemo(
         () => rooms.map((room) => ({ value: room.id, label: room.name })),
-        [rooms],
+        [rooms]
     );
 
     useEffect(() => {

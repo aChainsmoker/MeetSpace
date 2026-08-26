@@ -25,7 +25,7 @@ const initialState: RoomsState = {
 
 const roomsReducer = (
     state: RoomsState | undefined = initialState,
-    action: RoomsAction,
+    action: RoomsAction
 ): RoomsState => {
     switch (action.type) {
         case ROOMS_FETCH_LOAD:

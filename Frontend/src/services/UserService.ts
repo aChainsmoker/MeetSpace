@@ -4,7 +4,7 @@ import { UpdateUserRequest } from '@/models/UpdateUserRequest';
 import { GetProfileImageResponse } from '@/models/GetProfileImageResponse';
 
 export async function getUserProfile(
-    suppressUnauthorizedRedirect: boolean = false,
+    suppressUnauthorizedRedirect: boolean = false
 ): Promise<GetUserResponse> {
     return apiRequest<GetUserResponse>('/users/me', {
         suppressUnauthorizedHandler: suppressUnauthorizedRedirect,
@@ -12,7 +12,7 @@ export async function getUserProfile(
 }
 
 export async function updateUserProfile(
-    request: UpdateUserRequest,
+    request: UpdateUserRequest
 ): Promise<void> {
     await apiRequest('/users/me', {
         method: 'PUT',
@@ -21,10 +21,10 @@ export async function updateUserProfile(
 }
 
 export async function getProfileImage(
-    imageKey: string,
+    imageKey: string
 ): Promise<GetProfileImageResponse> {
     return apiRequest<GetProfileImageResponse>(
-        `/users/me/photo?imageKey=${encodeURIComponent(imageKey)}`,
+        `/users/me/photo?imageKey=${encodeURIComponent(imageKey)}`
     );
 }
 
