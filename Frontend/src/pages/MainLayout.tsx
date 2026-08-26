@@ -40,7 +40,7 @@ export default function MainLayout() {
             await dispatch(logoutAsync());
         } catch {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при выходе из аккаунта',
             });
         } finally {
@@ -51,7 +51,7 @@ export default function MainLayout() {
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке комнат',
             });
         });

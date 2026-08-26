@@ -81,7 +81,7 @@ export default function AuthForm({
             }
         } catch {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: isRegister
                     ? 'Произошла ошибка при регистрации'
                     : 'Произошла ошибка при входе в аккаунт',

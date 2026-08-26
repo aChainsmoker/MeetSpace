@@ -25,7 +25,7 @@ function toEvent(
         title: booking.title,
         start: `${booking.bookingDate} ${booking.startOfBookingTime}`,
         end: `${booking.bookingDate} ${booking.endOfBookingTime}`,
-        color: currentUserId === booking.userId ? 'blue' : 'orange',
+        color: currentUserId === booking.userId ? 'var(--blue-color)' : 'var(--orange-color)',
     };
 }
 
@@ -48,7 +48,7 @@ export default function CalendarPage() {
 
         dispatch(fetchBookingsByDateRangeAsync(start, end)).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке бронирований',
             });
         });

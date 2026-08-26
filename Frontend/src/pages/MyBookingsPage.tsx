@@ -35,7 +35,7 @@ export default function MyBookingsPage() {
     const loadBookings = useCallback(() => {
         dispatch(fetchUserBookingsAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке ваших бронирований',
             });
         });
@@ -74,7 +74,7 @@ export default function MyBookingsPage() {
                 .then(() =>
                     dispatch(fetchUserBookingsAsync()).catch(() => {
                         notifications.show({
-                            color: 'red',
+                            color: 'var(--red-color)',
                             message:
                                 'Произошла ошибка при загрузке ваших бронирований',
                         });
@@ -82,7 +82,7 @@ export default function MyBookingsPage() {
                 )
                 .catch(() => {
                     notifications.show({
-                        color: 'red',
+                        color: 'var(--red-color)',
                         message: 'Произошла ошибка при удалении бронирования',
                     });
                 });
@@ -93,7 +93,7 @@ export default function MyBookingsPage() {
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке комнат',
             });
         });
@@ -104,7 +104,7 @@ export default function MyBookingsPage() {
             await dispatch(createBookingAsync(request));
             dispatch(fetchUserBookingsAsync()).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке ваших бронирований',
                 });
             });
@@ -117,7 +117,7 @@ export default function MyBookingsPage() {
             await dispatch(updateBookingAsync(id, request));
             dispatch(fetchUserBookingsAsync()).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке ваших бронирований',
                 });
             });

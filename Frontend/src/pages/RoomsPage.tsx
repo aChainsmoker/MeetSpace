@@ -49,7 +49,7 @@ export default function RoomsPage() {
     useEffect(() => {
         dispatch(fetchBookingsAsync({})).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке бронирований',
             });
         });
@@ -73,7 +73,7 @@ export default function RoomsPage() {
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке комнат',
             });
         });
@@ -87,7 +87,7 @@ export default function RoomsPage() {
         (id: string) => {
             dispatch(fetchRoomByIdAsync(id)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке деталей о комнате',
                 });
             });
@@ -99,7 +99,7 @@ export default function RoomsPage() {
         (id: string) => {
             dispatch(fetchBookingsForRoomAsync(id)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message:
                         'Произошла ошибка при загрузке бронирований комнаты',
                 });
@@ -113,7 +113,7 @@ export default function RoomsPage() {
             await dispatch(createBookingAsync(request));
             dispatch(fetchBookingsAsync({})).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке бронирований',
                 });
             });
@@ -126,7 +126,7 @@ export default function RoomsPage() {
             await dispatch(updateBookingAsync(id, request));
             dispatch(fetchBookingsAsync({})).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке бронирований',
                 });
             });

@@ -137,7 +137,7 @@ export default function BookingModal({
     const handleSubmit = async (values: BookingFormValues) => {
         if (!userId) {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Не удалось определить текущего пользователя',
             });
             return;
@@ -168,7 +168,7 @@ export default function BookingModal({
                 error instanceof ApiError &&
                 error.detail?.toLowerCase().includes('already taken');
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: isRoomTaken
                     ? 'Данная переговорная уже занята в это время. Пожалуйста, выберите другое время.'
                     : isEditing

@@ -9,7 +9,7 @@
 }
 
 .auth-form__subtitle {
-    color: black;
+    color: var(--black-color);
     margin-bottom: 32px;
 }
 
@@ -26,7 +26,7 @@
 .auth-form__submit {
     --button-bg: var(--button-submit);
     --button-hover: var(--button-submit-hover);
-    --button-color: white;
+    --button-color: var(--white-color);
 
     margin-bottom: 32px;
 }

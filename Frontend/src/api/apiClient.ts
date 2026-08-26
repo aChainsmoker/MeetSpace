@@ -104,7 +104,7 @@ export async function apiRequest<T>(
             }
         } catch {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Ответ от сервера содержит ошибку',
             });
             throw new ApiError(response.status, text, 'Body is not json');

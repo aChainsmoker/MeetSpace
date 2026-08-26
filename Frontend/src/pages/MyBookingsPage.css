@@ -21,7 +21,7 @@
 }
 
 .bookings-page__floating-button-plus {
-    color: white;
+    color: var(--white-color);
     margin-right: 10px;
 }
 

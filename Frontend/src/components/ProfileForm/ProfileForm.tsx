@@ -77,7 +77,7 @@ export default function ProfileForm({
             setSuccess('Данные сохранены');
         } catch {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при сохранении профиля',
             });
         } finally {

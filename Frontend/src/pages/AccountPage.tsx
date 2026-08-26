@@ -36,7 +36,7 @@ export default function AccountPage() {
             await dispatch(logoutAsync());
         } catch {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при выходе из аккаунта',
             });
         } finally {

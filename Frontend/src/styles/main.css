@@ -12,6 +12,13 @@
     --nav-primary: #0d1b2a;
     --nav-option-hover: #1a3659;
     --shadow-primary: #0000004D;
+    --white-color: white;
+    --red-color: red;
+    --gray-color: gray;
+    --black-color: black;
+    --blue-color: blue;
+    --orange-color: orange;
+
     --mobile-breakpoint: 48em;
     --tablet-breakpoint: 62em;
     --narrow-desktop-breakpoint: 88em;

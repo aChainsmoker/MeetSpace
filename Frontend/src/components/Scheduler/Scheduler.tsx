@@ -71,7 +71,7 @@ export default function Scheduler({
             start: `${b.bookingDate} ${b.startOfBookingTime}`,
             end: `${b.bookingDate} ${b.endOfBookingTime}`,
             resourceId: b.room.id,
-            color: 'blue',
+            color: 'var(--blue-color)',
             payload: { isOwn: currentUserId === b.userId, booking: b },
         }));
     }, [bookings, currentUserId]);

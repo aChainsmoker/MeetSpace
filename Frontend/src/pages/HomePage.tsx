@@ -110,7 +110,7 @@ export default function HomePage() {
     const handleFetchRooms = useCallback(() => {
         dispatch(fetchRoomsAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке комнат',
             });
         });
@@ -119,7 +119,7 @@ export default function HomePage() {
     const handleFetchEquipment = useCallback(() => {
         dispatch(fetchEquipmentAsync()).catch(() => {
             notifications.show({
-                color: 'red',
+                color: 'var(--red-color)',
                 message: 'Произошла ошибка при загрузке оборудования',
             });
         });
@@ -129,7 +129,7 @@ export default function HomePage() {
         (f: BookingsFilter) => {
             dispatch(fetchBookingsAsync(f)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке бронирований',
                 });
             });
@@ -142,7 +142,7 @@ export default function HomePage() {
             .then(setOccupancyBookings)
             .catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message:
                         'Произошла ошибка при загрузке статуса занятости комнат',
                 });
@@ -162,7 +162,7 @@ export default function HomePage() {
         (id: string) => {
             dispatch(fetchRoomByIdAsync(id)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке деталей о комнате',
                 });
             });
@@ -174,7 +174,7 @@ export default function HomePage() {
         (id: string) => {
             dispatch(fetchBookingsForRoomAsync(id)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message:
                         'Произошла ошибка при загрузке бронирований комнаты',
                 });
@@ -200,7 +200,7 @@ export default function HomePage() {
             await dispatch(updateBookingAsync(id, request));
             dispatch(fetchBookingsAsync(filter)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке бронирований',
                 });
             });
@@ -214,7 +214,7 @@ export default function HomePage() {
             await dispatch(createBookingAsync(request));
             dispatch(fetchBookingsAsync(filter)).catch(() => {
                 notifications.show({
-                    color: 'red',
+                    color: 'var(--red-color)',
                     message: 'Произошла ошибка при загрузке бронирований',
                 });
             });
