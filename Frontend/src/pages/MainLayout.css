@@ -35,7 +35,7 @@
     background-color: var(--button-submit);
 }
 
-.add-button__plus {
+.main-layout__plus {
     color: white;
     margin-right: 10px;
 }

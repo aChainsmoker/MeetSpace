@@ -100,7 +100,7 @@ export default function MainLayout() {
                             onClick={handleOpeningModal}
                         >
                             <PlusIcon
-                                className="add-button__plus"
+                                className="main-layout__plus"
                                 weight="bold"
                                 color="white"
                                 size="1.5em"
