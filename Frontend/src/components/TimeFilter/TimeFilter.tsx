@@ -26,7 +26,7 @@ export default function TimeFilter({
           : 'Время';
 
     return (
-        <div className="filter time-filter">
+        <div className="time-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"

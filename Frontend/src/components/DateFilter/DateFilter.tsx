@@ -22,7 +22,7 @@ export default function DateFilter({ value, onChange }: DateFilterProps) {
           : 'Дата';
 
     return (
-        <div className="filter date-filter">
+        <div className="date-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"

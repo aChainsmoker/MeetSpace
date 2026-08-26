@@ -23,7 +23,7 @@ export default function AmenitiesFilter({
     }, [onFetch]);
 
     return (
-        <div className="filter amenities-filter">
+        <div className="amenities-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"

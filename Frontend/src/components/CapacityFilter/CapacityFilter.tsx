@@ -19,7 +19,7 @@ export default function CapacityFilter({
         : `Вместимость${value ? ': ' + value : ''}`;
 
     return (
-        <div className="filter capacity-filter">
+        <div className="capacity-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"
