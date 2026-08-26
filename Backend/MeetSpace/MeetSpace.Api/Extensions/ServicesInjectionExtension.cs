@@ -26,7 +26,6 @@ public static class ServicesInjectionExtension
         services.AddScoped<IBookingsService, BookingsService>();
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IRoomsRepository, RoomsRepository>();
-        services.AddScoped<IBookingsRepository, BookingsRepository>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IRefreshTokensService, RefreshTokensService>();
@@ -35,8 +34,10 @@ public static class ServicesInjectionExtension
         services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IFileStorageService, S3FileStorageService>();
-        services.AddScoped<IBookingsRepositoryHelper, BookingsRepository>();
         services.AddScoped<ISpecificAuthorizationRulesEnforcer, SpecificAuthorizationRulesEnforcer>();
+        services.AddScoped<BookingsRepository>();
+        services.AddScoped<IBookingsRepository>(x => x.GetRequiredService<BookingsRepository>());
+        services.AddScoped<IBookingsRepositoryHelper>(x => x.GetRequiredService<BookingsRepository>());
         services.AddScoped<RoomEquipmentSeeder>();
         services.AddScoped<ManagerUserSeeder>();
         services.AddScoped<BookingsSeeder>();
