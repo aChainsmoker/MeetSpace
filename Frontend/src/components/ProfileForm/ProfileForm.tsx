@@ -45,7 +45,9 @@ export default function ProfileForm({
     });
 
     useEffect(() => {
-        if (!user) return;
+        if (!user) {
+            return;
+        }
         form.setValues({
             firstName: user.firstName,
             lastName: user.lastName,
@@ -55,7 +57,9 @@ export default function ProfileForm({
 
     const selectFile = (files: FileWithPath[]) => {
         const file = files[0];
-        if (!file) return;
+        if (!file) {
+            return;
+        }
         setNewFile(file);
         setPreviewUrl(URL.createObjectURL(file));
     };

@@ -62,7 +62,9 @@ export default function RoomsPage() {
 
     const filteredRooms = useMemo(() => {
         const query = searchQuery.trim().toLowerCase();
-        if (!query) return rooms;
+        if (!query) {
+            return rooms;
+        }
         return rooms.filter((room) => room.name.toLowerCase().includes(query));
     }, [rooms, searchQuery]);
 

@@ -71,7 +71,9 @@ export default function BookingModal({
             roomId: (value) => (value ? null : 'Выберите переговорную'),
             date: (value) => (value ? null : 'Выберите дату'),
             startTime: (value, values) => {
-                if (!value) return 'Укажите время начала';
+                if (!value) {
+                    return 'Укажите время начала';
+                }
                 if (
                     values.date &&
                     new Date(`${values.date}T${value}`).getTime() < Date.now()
@@ -81,7 +83,9 @@ export default function BookingModal({
                 return null;
             },
             endTime: (value, values) => {
-                if (!value) return 'Укажите время окончания';
+                if (!value) {
+                    return 'Укажите время окончания';
+                }
                 if (values.startTime && value <= values.startTime) {
                     return 'Время окончания должно быть позже времени начала';
                 }
@@ -111,18 +115,24 @@ export default function BookingModal({
     );
 
     useEffect(() => {
-        if (!opened) return;
+        if (!opened) {
+            return;
+        }
         onFetchRooms();
     }, [opened, onFetchRooms]);
 
     useEffect(() => {
-        if (!opened || isEditing) return;
+        if (!opened || isEditing) {
+            return;
+        }
 
         form.setFieldValue('roomId', initialRoomId ?? null);
     }, [opened, isEditing, initialRoomId]);
 
     useEffect(() => {
-        if (!opened || !isEditing || !booking) return;
+        if (!opened || !isEditing || !booking) {
+            return;
+        }
 
         form.setValues({
             roomId: booking.room.id,

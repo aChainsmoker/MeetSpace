@@ -54,8 +54,12 @@ function formatBookingDate(dateStr: string) {
 
     const day = date.toLocaleString('ru-RU', { day: 'numeric', month: 'long' });
 
-    if (diff === 0) return `сегодня, ${day}`;
-    if (diff === 1) return `завтра, ${day}`;
+    if (diff === 0) {
+        return `сегодня, ${day}`;
+    }
+    if (diff === 1) {
+        return `завтра, ${day}`;
+    }
     return day;
 }
 
@@ -78,7 +82,9 @@ export default function RoomDetailCard({
     const [visibleBookingCount, setVisibleBookingCount] = useState(3);
 
     useEffect(() => {
-        if (!isMobile) return;
+        if (!isMobile) {
+            return;
+        }
         const { overflow } = document.body.style;
         document.body.style.overflow = 'hidden';
         return () => {

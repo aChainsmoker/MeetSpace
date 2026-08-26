@@ -27,7 +27,9 @@ async function refreshAccessToken(): Promise<string | null> {
     if (!refreshPromise) {
         refreshPromise = (async () => {
             const refreshToken = getRefreshToken();
-            if (!refreshToken) return null;
+            if (!refreshToken) {
+                return null;
+            }
 
             const res = await fetch(`${API_URL}/auth/refresh`, {
                 method: 'POST',
@@ -114,6 +116,8 @@ export async function apiRequest<T>(
     }
 
     const text = await response.text();
-    if (!text) return undefined as T;
+    if (!text) {
+        return undefined as T;
+    }
     return JSON.parse(text) as T;
 }

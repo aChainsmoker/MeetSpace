@@ -7,6 +7,7 @@ import prettierConfig from 'eslint-config-prettier';
 export default tseslint.config(
     js.configs.recommended,
     ...tseslint.configs.recommended,
+    prettierConfig,
     {
         plugins: {
             'react-hooks': reactHooks,
@@ -15,8 +16,8 @@ export default tseslint.config(
         rules: {
             ...reactHooks.configs.recommended.rules,
             'react-refresh/only-export-components': 'warn',
+            'curly': ['error', 'all'],
         },
     },
-    prettierConfig,
     {ignores: ['dist/']},
 );
