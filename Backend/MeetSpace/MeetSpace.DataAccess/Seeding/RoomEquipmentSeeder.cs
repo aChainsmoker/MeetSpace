@@ -33,7 +33,6 @@ public class RoomEquipmentSeeder
                 Capacity = r.Capacity,
                 Floor = r.Floor,
                 Description = r.Description,
-                IsActive = r.IsActive
             })
             .ToList();
 

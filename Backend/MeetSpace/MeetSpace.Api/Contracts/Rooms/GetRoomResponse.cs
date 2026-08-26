@@ -9,7 +9,6 @@ public class GetRoomResponse
     public uint Capacity { get; set; }
     public int Floor { get; set; }
     public string? Description { get; set; }
-    public bool IsActive { get; set; }
     public string Photo { get; set; } = null!;
     public List<GetRoomEquipmentResponse> RoomEquipments { get; set; } = [];
 }

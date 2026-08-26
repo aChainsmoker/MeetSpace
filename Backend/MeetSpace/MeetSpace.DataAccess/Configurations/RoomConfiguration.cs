@@ -24,9 +24,6 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
             .Property(x => x.Floor)
             .IsRequired();
         builder
-            .Property(x => x.IsActive)
-            .IsRequired();
-        builder
             .Property(x => x.Photo)
             .IsRequired(false);
         builder

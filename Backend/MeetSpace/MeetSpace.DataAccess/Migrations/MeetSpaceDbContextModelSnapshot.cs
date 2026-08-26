@@ -105,9 +105,6 @@ namespace MeetSpace.DataAccess.Migrations
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)

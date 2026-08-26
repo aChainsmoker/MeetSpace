@@ -46,7 +46,6 @@ namespace MeetSpace.DataAccess.Migrations
                     Capacity = table.Column<long>(type: "bigint", nullable: false),
                     Floor = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     Photo = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

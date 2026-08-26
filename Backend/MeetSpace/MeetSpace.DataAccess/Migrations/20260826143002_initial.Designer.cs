@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MeetSpace.DataAccess.Migrations
 {
     [DbContext(typeof(MeetSpaceDbContext))]
-    [Migration("20260809175214_initial")]
+    [Migration("20260826143002_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -107,9 +107,6 @@ namespace MeetSpace.DataAccess.Migrations
 
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
