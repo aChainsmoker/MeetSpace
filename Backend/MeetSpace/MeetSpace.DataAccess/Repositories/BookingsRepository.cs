@@ -29,6 +29,8 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
         return await _dbContext.Bookings
             .AsNoTracking()
             .Where(x => x.RoomId == roomId)
+            .OrderBy(x => x.BookingDate)
+            .ThenBy(x => x.StartOfBookingTime)
             .ToListAsync(cancellationToken);
     }
 
@@ -37,6 +39,8 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
         return await _dbContext.Bookings
             .AsNoTracking()
             .Where(x => x.UserId == userId)
+            .OrderBy(x => x.BookingDate)
+            .ThenBy(x => x.StartOfBookingTime)
             .ToListAsync(cancellationToken);
     }
 
