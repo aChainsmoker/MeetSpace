@@ -19,7 +19,7 @@ public class SpecificAuthorizationRulesEnforcer : ISpecificAuthorizationRulesEnf
     
     public void CheckIfUserOwnsDataOrHasRightsToModifyIt(Guid dataOwnerId)
     {
-        if (_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value != dataOwnerId.ToString() || 
+        if (_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value != dataOwnerId.ToString() && 
             !_rolePoliciesSettings.OnlyManager.AllowedRoles.Contains(_httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value))
         {
             throw new ForbidException("You do not have access to this data");

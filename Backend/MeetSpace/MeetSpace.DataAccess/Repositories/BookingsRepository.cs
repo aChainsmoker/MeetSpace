@@ -94,12 +94,12 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
         if (filter.StartTime != null && filter.EndTime != null)
         {
             bookings = bookings.Where(x =>
-                (x.StartOfBookingTime > ((TimeOnly)filter.StartTime) &&
+                (x.StartOfBookingTime >= ((TimeOnly)filter.StartTime) &&
                  x.StartOfBookingTime < ((TimeOnly)filter.EndTime)) ||
                 (x.EndOfBookingTime > ((TimeOnly)filter.StartTime) &&
-                 x.EndOfBookingTime < ((TimeOnly)filter.EndTime)) ||
-                (x.StartOfBookingTime < ((TimeOnly)filter.StartTime) &&
-                 x.EndOfBookingTime > ((TimeOnly)filter.EndTime)));
+                 x.EndOfBookingTime <= ((TimeOnly)filter.EndTime)) ||
+                (x.StartOfBookingTime <= ((TimeOnly)filter.StartTime) &&
+                 x.EndOfBookingTime >= ((TimeOnly)filter.EndTime)));
         }
 
         if (filter.Capacity != null)

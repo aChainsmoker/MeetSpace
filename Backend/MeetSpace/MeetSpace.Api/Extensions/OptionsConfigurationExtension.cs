@@ -18,5 +18,6 @@ public static class OptionsConfigurationExtension
         services.Configure<SeedingOptions>(configuration.GetSection(nameof(SeedingOptions)));
         services.Configure<S3StorageSettings>(configuration.GetSection(nameof(S3StorageSettings)));
         services.Configure<BookingSettings>(configuration.GetSection(nameof(BookingSettings)));
+        services.Configure<RolePoliciesSettings>(configuration.GetSection(nameof(RolePoliciesSettings)));
     }
 }
