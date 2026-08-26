@@ -1,0 +1,53 @@
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--bg-color-primary);
+    border-top: 1px solid var(--mantine-color-gray-3);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 12; /* это минимальное значение перебивающее календарь (-_-) */
+}
+
+[data-mantine-color-scheme='dark'] .bottom-nav {
+    background: var(--mantine-color-dark-7);
+    border-top-color: var(--mantine-color-dark-5);
+}
+
+@media (width <= 62em) {
+    .bottom-nav {
+        display: flex;
+    }
+}
+
+.bottom-nav__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--mantine-color-gray-6);
+    cursor: pointer;
+}
+
+.bottom-nav__item[data-active] .bottom-nav__label {
+    font-weight: 600;
+}
+
+.bottom-nav__icon {
+    color: var(--mantine-color-gray-6);
+}
+
+.bottom-nav__label {
+    color: var(--mantine-color-gray-6);
+    font-size: 12px;
+    line-height: 1;
+}

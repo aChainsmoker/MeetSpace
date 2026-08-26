@@ -1,0 +1,26 @@
+.floating-button {
+    display: none;
+    position: fixed;
+    right: 16px;
+    bottom: calc(64px + env(safe-area-inset-bottom) + 16px);
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--button-submit);
+    color: var(--white-color);
+    box-shadow: var(--mantine-shadow-lg);
+    cursor: pointer;
+}
+
+.floating-button:hover {
+    background-color: var(--button-submit);
+}
+
+@media (width <= 62em) {
+    .floating-button {
+        display: flex;
+    }
+}

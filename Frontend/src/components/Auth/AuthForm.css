@@ -1,0 +1,40 @@
+.auth-form {
+    max-width: 420px;
+    width: 100%;
+}
+
+.auth-form__title {
+    color: var(--blue-title);
+    margin-bottom: 8px;
+}
+
+.auth-form__subtitle {
+    color: var(--black-color);
+    margin-bottom: 32px;
+}
+
+.auth-form__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.auth-form__checkbox {
+    margin: 24px 0;
+}
+
+.auth-form__submit {
+    --button-bg: var(--button-submit);
+    --button-hover: var(--button-submit-hover);
+    --button-color: var(--white-color);
+
+    margin-bottom: 32px;
+}
+
+.auth-form__footer {
+    text-align: center;
+}
+
+.auth-form__toggle {
+    cursor: pointer;
+}

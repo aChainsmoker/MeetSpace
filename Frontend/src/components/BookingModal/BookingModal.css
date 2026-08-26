@@ -1,0 +1,7 @@
+.booking-modal__create-button {
+    background-color: var(--button-submit);
+}
+
+.booking-modal__create-button:hover {
+    background-color: var(--button-submit);
+}

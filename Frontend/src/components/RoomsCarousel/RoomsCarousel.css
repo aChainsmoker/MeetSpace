@@ -1,0 +1,11 @@
+﻿.rooms-carousel__slide {
+    padding: 4px;
+    border-radius: var(--mantine-radius-md);
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rooms-carousel__slide--selected {
+    background: var(--user-owns);
+}

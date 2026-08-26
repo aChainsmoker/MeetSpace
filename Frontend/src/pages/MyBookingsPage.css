@@ -1,0 +1,32 @@
+.bookings-page {
+    width: 100%;
+}
+
+.bookings-page__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bookings-page__floating-button {
+    position: fixed;
+    bottom: 32px;
+    right: 40px;
+    background-color: var(--button-submit);
+    box-shadow: var(--mantine-shadow-lg);
+}
+
+.bookings-page__floating-button:hover {
+    background-color: var(--button-submit);
+}
+
+.bookings-page__floating-button-plus {
+    color: var(--white-color);
+    margin-right: 10px;
+}
+
+@media (width <= 62em) {
+    .bookings-page__floating-button {
+        display: none;
+    }
+}

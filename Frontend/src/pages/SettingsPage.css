@@ -1,0 +1,13 @@
+.settings-page {
+    width: 100%;
+}
+
+.settings-page__row {
+    padding: 16px;
+    border: 1px solid var(--mantine-color-gray-3);
+    border-radius: var(--mantine-radius-md);
+}
+
+[data-mantine-color-scheme='dark'] .settings-page__row {
+    border-color: var(--mantine-color-dark-5);
+}

@@ -1,0 +1,25 @@
+﻿FROM node:20-alpine AS build
+WORKDIR /app
+
+COPY package*.json ./
+COPY patches ./patches
+RUN npm ci
+
+COPY . .
+
+ARG REACT_APP_API_URL
+ARG REACT_APP_ACCESS_TOKEN_IDENTIFIER
+ARG REACT_APP_REFRESH_TOKEN_IDENTIFIER
+
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ENV REACT_APP_ACCESS_TOKEN_IDENTIFIER=$REACT_APP_ACCESS_TOKEN_IDENTIFIER
+ENV REACT_APP_REFRESH_TOKEN_IDENTIFIER=$REACT_APP_REFRESH_TOKEN_IDENTIFIER
+
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
