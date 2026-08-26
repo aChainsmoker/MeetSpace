@@ -7,30 +7,30 @@ namespace MeetSpace.DataAccess.Repositories.Tokens;
 
 public class RefreshTokensRepository : IRefreshTokensRepository
 {
-    private readonly MeetSpaceDbContext _dbDbContext;
+    private readonly MeetSpaceDbContext _dbContext;
 
-    public RefreshTokensRepository(MeetSpaceDbContext dbDbContext)
+    public RefreshTokensRepository(MeetSpaceDbContext dbContext)
     {
-        _dbDbContext = dbDbContext;
+        _dbContext = dbContext;
     }
     public async Task<string> CreateRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
-        await _dbDbContext.AddAsync(refreshToken, cancellationToken);
-        await _dbDbContext.SaveChangesAsync(cancellationToken);
+        await _dbContext.AddAsync(refreshToken, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
         
         return refreshToken.Token;
     }
 
     public async Task DeleteRefreshTokenAsync(string token, CancellationToken cancellationToken)
     {
-        await _dbDbContext.RefreshTokens
+        await _dbContext.RefreshTokens
             .Where(r=>r.Token == token)
             .ExecuteDeleteAsync(cancellationToken);
     }
 
     public async Task<RefreshToken?> GetRefreshTokenAsync(string token, CancellationToken cancellationToken)
     {
-        var refreshTokenEntity = await _dbDbContext.RefreshTokens
+        var refreshTokenEntity = await _dbContext.RefreshTokens
             .AsNoTracking()
             .FirstOrDefaultAsync(r => r.Token == token, cancellationToken);
         
