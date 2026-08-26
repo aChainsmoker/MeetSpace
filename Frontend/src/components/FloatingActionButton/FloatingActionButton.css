@@ -1,4 +1,4 @@
-.floating_button {
+.floating-button {
     display: none;
     position: fixed;
     right: 16px;
@@ -15,12 +15,12 @@
     cursor: pointer;
 }
 
-.floating_button:hover {
+.floating-button:hover {
     background-color: var(--button-submit);
 }
 
 @media (width <= 62em) {
-    .floating_button {
+    .floating-button {
         display: flex;
     }
 }

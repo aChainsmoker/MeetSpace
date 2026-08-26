@@ -8,7 +8,7 @@
     gap: 12px;
 }
 
-.bookings-page__floating_button {
+.bookings-page__floating-button {
     position: fixed;
     bottom: 32px;
     right: 40px;
@@ -16,17 +16,17 @@
     box-shadow: var(--mantine-shadow-lg);
 }
 
-.bookings-page__floating_button:hover {
+.bookings-page__floating-button:hover {
     background-color: var(--button-submit);
 }
 
-.bookings-page__floating_button-plus {
+.bookings-page__floating-button-plus {
     color: white;
     margin-right: 10px;
 }
 
 @media (width <= 62em) {
-    .bookings-page__floating_button {
+    .bookings-page__floating-button {
         display: none;
     }
 }

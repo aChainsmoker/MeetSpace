@@ -156,12 +156,12 @@ export default function MyBookingsPage() {
                 </Tabs.Panel>
             </Tabs>
             <Button
-                className="bookings-page__floating_button"
+                className="bookings-page__floating-button"
                 size="lg"
                 onClick={handleCreate}
             >
                 <PlusIcon
-                    className="bookings-page__floating_button-plus"
+                    className="bookings-page__floating-button-plus"
                     weight="bold"
                     color="white"
                     size="1.5em"

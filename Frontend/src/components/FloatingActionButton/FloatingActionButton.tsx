@@ -11,7 +11,7 @@ export default function FloatingActionButton({
     return (
         <button
             type="button"
-            className="floating_button"
+            className="floating-button"
             onClick={onClick}
             aria-label="Новая бронь"
         >
