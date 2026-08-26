@@ -59,7 +59,8 @@ public class BookingsRepository : IBookingsRepository, IBookingsRepositoryHelper
 
     public async Task UpdateBookingAsync(Booking booking, CancellationToken cancellationToken = default)
     {
-        _dbContext.Bookings.Update(booking);
+        var bookingEntry = _dbContext.Bookings.Update(booking);
+        bookingEntry.Property(x=>x.UserId).IsModified = false;
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
