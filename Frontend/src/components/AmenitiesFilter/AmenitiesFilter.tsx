@@ -23,7 +23,7 @@ export default function AmenitiesFilter({
     }, [onFetch]);
 
     return (
-        <div className="amenities-filter">
+        <div className="filter amenities-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"
@@ -32,7 +32,7 @@ export default function AmenitiesFilter({
                 size="lg"
                 rightSection={<CaretDownIcon size={14} />}
                 leftSection={
-                    <span className="filter-toggle__left">
+                    <span className="filter__left">
                         <SlidersHorizontalIcon size={18} />
                         Удобства
                     </span>

@@ -26,7 +26,7 @@ export default function TimeFilter({
           : 'Время';
 
     return (
-        <div className="time-filter">
+        <div className="filter time-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"
@@ -35,7 +35,7 @@ export default function TimeFilter({
                 size="lg"
                 rightSection={<CaretDownIcon size={14} />}
                 leftSection={
-                    <span className="filter-toggle__left">
+                    <span className="filter__left">
                         <ClockIcon size={18} />
                         {label}
                     </span>

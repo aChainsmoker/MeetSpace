@@ -19,7 +19,7 @@ export default function CapacityFilter({
         : `Вместимость${value ? ': ' + value : ''}`;
 
     return (
-        <div className="capacity-filter">
+        <div className="filter capacity-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"
@@ -28,7 +28,7 @@ export default function CapacityFilter({
                 size="lg"
                 rightSection={<CaretDownIcon size={14} />}
                 leftSection={
-                    <span className="filter-toggle__left">
+                    <span className="filter__left">
                         <UserIcon size={18} />
                         {label}
                     </span>

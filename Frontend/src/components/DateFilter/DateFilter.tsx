@@ -22,7 +22,7 @@ export default function DateFilter({ value, onChange }: DateFilterProps) {
           : 'Дата';
 
     return (
-        <div className="date-filter">
+        <div className="filter date-filter">
             <Button
                 onClick={toggle}
                 justify="space-between"
@@ -31,7 +31,7 @@ export default function DateFilter({ value, onChange }: DateFilterProps) {
                 size="lg"
                 rightSection={<CaretDownIcon size={14} />}
                 leftSection={
-                    <span className="filter-toggle__left">
+                    <span className="filter__left">
                         <CalendarDotIcon size={18} />
                         {label}
                     </span>
