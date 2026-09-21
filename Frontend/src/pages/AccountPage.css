@@ -1,0 +1,47 @@
+.account-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 64px);
+}
+
+.account-page__content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 40%;
+    min-width: 600px;
+}
+
+.account-page__settings {
+    align-self: flex-end;
+    display: none;
+}
+
+.account-page__logout {
+    display: none;
+}
+
+@media (width <= 62em) {
+    .account-page__settings {
+        display: block;
+    }
+
+    .account-page__logout {
+        display: block;
+        width: 10em;
+        align-self: center;
+        margin-top: 1em;
+    }
+}
+
+@media (width <= 48em) {
+    .account-page {
+        min-height: calc(100vh - 24px - 88px);
+    }
+
+    .account-page__content {
+        width: 100%;
+        min-width: 0;
+    }
+}

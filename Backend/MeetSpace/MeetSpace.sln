@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetSpace.Api", "MeetSpace.Api\MeetSpace.Api.csproj", "{3B570DCF-2315-4CBA-ACEA-E52D04120696}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetSpace.Domain", "MeetSpace.Domain\MeetSpace.Domain.csproj", "{35094B0A-F815-479C-A98E-B7303BE6E19C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetSpace.Application", "MeetSpace.Application\MeetSpace.Application.csproj", "{494EAEE7-116E-4C84-9E71-214C459B5CA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetSpace.DataAccess", "MeetSpace.DataAccess\MeetSpace.DataAccess.csproj", "{1D9389B7-BE2D-408F-9C8B-56615334F320}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetSpace.Infrastructure", "MeetSpace.Infrastructure\MeetSpace.Infrastructure.csproj", "{8F5F856E-148A-4F28-80B4-461491335753}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B570DCF-2315-4CBA-ACEA-E52D04120696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B570DCF-2315-4CBA-ACEA-E52D04120696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B570DCF-2315-4CBA-ACEA-E52D04120696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B570DCF-2315-4CBA-ACEA-E52D04120696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35094B0A-F815-479C-A98E-B7303BE6E19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35094B0A-F815-479C-A98E-B7303BE6E19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35094B0A-F815-479C-A98E-B7303BE6E19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35094B0A-F815-479C-A98E-B7303BE6E19C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{494EAEE7-116E-4C84-9E71-214C459B5CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{494EAEE7-116E-4C84-9E71-214C459B5CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{494EAEE7-116E-4C84-9E71-214C459B5CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{494EAEE7-116E-4C84-9E71-214C459B5CA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D9389B7-BE2D-408F-9C8B-56615334F320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D9389B7-BE2D-408F-9C8B-56615334F320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D9389B7-BE2D-408F-9C8B-56615334F320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D9389B7-BE2D-408F-9C8B-56615334F320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F5F856E-148A-4F28-80B4-461491335753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F5F856E-148A-4F28-80B4-461491335753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F5F856E-148A-4F28-80B4-461491335753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F5F856E-148A-4F28-80B4-461491335753}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

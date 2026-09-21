@@ -1,0 +1,24 @@
+:root {
+    --button-submit: #0053d4;
+    --blue-title: #053184;
+    --button-danger: #D41B00;
+    --button-submit-hover: #0044b3;
+    --bg-color-primary: #f1f3f5;
+    --stranger-owns: #fd7e14;
+    --user-owns: #228be6;
+    --user-owns-bg: #228BE626;
+    --stranger-owns-bg: #FD7E1426;
+    --border-color-primary: #dee2e6;
+    --nav-primary: #0d1b2a;
+    --nav-option-hover: #1a3659;
+    --shadow-primary: #0000004D;
+    --white-color: white;
+    --red-color: red;
+    --gray-color: gray;
+    --black-color: black;
+    --blue-color: blue;
+    --orange-color: orange;
+    --mobile-breakpoint: 48em;
+    --tablet-breakpoint: 62em;
+    --narrow-desktop-breakpoint: 88em;
+}

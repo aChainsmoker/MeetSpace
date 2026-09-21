@@ -1,0 +1,27 @@
+.date-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.date-filter__collapse {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.date-filter .date-filter__calendar {
+    width: 100%;
+    max-width: 25em;
+}
+
+.date-filter__calendar .mantine-MiniCalendar-days {
+    flex: 1;
+    min-width: 0;
+}
+
+.date-filter__calendar .mantine-MiniCalendar-day {
+    flex: 1;
+    min-width: 0;
+}

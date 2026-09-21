@@ -1,0 +1,64 @@
+diff --git a/node_modules/@mantine/schedule/cjs/components/DayView/get-day-view-events/get-day-positioned-events.cjs b/node_modules/@mantine/schedule/cjs/components/DayView/get-day-view-events/get-day-positioned-events.cjs
+index 48eff4d..ec468b3 100644
+--- a/node_modules/@mantine/schedule/cjs/components/DayView/get-day-view-events/get-day-positioned-events.cjs
++++ b/node_modules/@mantine/schedule/cjs/components/DayView/get-day-view-events/get-day-positioned-events.cjs
+@@ -69,14 +69,22 @@ function getDayPositionedEvents({ events, startTime, endTime, intervalMinutes, d
+ 			if (otherEvent === positionedEvent || otherEvent.position.allDay) continue;
+ 			if (require_is_events_overlap.isEventsOverlap(otherEvent, positionedEvent)) directlyOverlapping.push(otherEvent);
+ 		}
+-		let maxColumn = column;
+-		for (const overlappingEvent of directlyOverlapping) {
+-			maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
++		const connectedEvents = [];
++		const visited = new Set([positionedEvent]);
++		const queue = [positionedEvent];
++		while (queue.length > 0) {
++			const currentEvent = queue.shift();
+ 			for (const otherEvent of positioned) {
+-				if (otherEvent === overlappingEvent || otherEvent.position.allDay) continue;
+-				if (require_is_events_overlap.isEventsOverlap(otherEvent, overlappingEvent)) maxColumn = Math.max(maxColumn, otherEvent.position.column);
++				if (otherEvent === currentEvent || otherEvent.position.allDay || visited.has(otherEvent)) continue;
++				if (require_is_events_overlap.isEventsOverlap(otherEvent, currentEvent)) {
++					visited.add(otherEvent);
++					connectedEvents.push(otherEvent);
++					queue.push(otherEvent);
++				}
+ 			}
+ 		}
++		let maxColumn = column;
++		for (const overlappingEvent of connectedEvents) maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
+ 		const totalColumns = maxColumn + 1;
+ 		let nextOccupiedColumn = totalColumns;
+ 		for (const other of directlyOverlapping) if (other.position.column > column && other.position.column < nextOccupiedColumn) nextOccupiedColumn = other.position.column;
+diff --git a/node_modules/@mantine/schedule/esm/components/DayView/get-day-view-events/get-day-positioned-events.mjs b/node_modules/@mantine/schedule/esm/components/DayView/get-day-view-events/get-day-positioned-events.mjs
+index 4ae6723..89e0589 100644
+--- a/node_modules/@mantine/schedule/esm/components/DayView/get-day-view-events/get-day-positioned-events.mjs
++++ b/node_modules/@mantine/schedule/esm/components/DayView/get-day-view-events/get-day-positioned-events.mjs
+@@ -69,14 +69,22 @@ function getDayPositionedEvents({ events, startTime, endTime, intervalMinutes, d
+ 			if (otherEvent === positionedEvent || otherEvent.position.allDay) continue;
+ 			if (isEventsOverlap(otherEvent, positionedEvent)) directlyOverlapping.push(otherEvent);
+ 		}
+-		let maxColumn = column;
+-		for (const overlappingEvent of directlyOverlapping) {
+-			maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
++		const connectedEvents = [];
++		const visited = new Set([positionedEvent]);
++		const queue = [positionedEvent];
++		while (queue.length > 0) {
++			const currentEvent = queue.shift();
+ 			for (const otherEvent of positioned) {
+-				if (otherEvent === overlappingEvent || otherEvent.position.allDay) continue;
+-				if (isEventsOverlap(otherEvent, overlappingEvent)) maxColumn = Math.max(maxColumn, otherEvent.position.column);
++				if (otherEvent === currentEvent || otherEvent.position.allDay || visited.has(otherEvent)) continue;
++				if (isEventsOverlap(otherEvent, currentEvent)) {
++					visited.add(otherEvent);
++					connectedEvents.push(otherEvent);
++					queue.push(otherEvent);
++				}
+ 			}
+ 		}
++		let maxColumn = column;
++		for (const overlappingEvent of connectedEvents) maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
+ 		const totalColumns = maxColumn + 1;
+ 		let nextOccupiedColumn = totalColumns;
+ 		for (const other of directlyOverlapping) if (other.position.column > column && other.position.column < nextOccupiedColumn) nextOccupiedColumn = other.position.column;
